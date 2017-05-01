@@ -11,6 +11,7 @@ class ReactWizardContainer extends Component {
 
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
+		this.renderChildren = this.renderChildren.bind(this);
 
 		console.log(this.state)
 	}
@@ -22,7 +23,12 @@ class ReactWizardContainer extends Component {
 				index: index,
 				_onPrevFunc: this.prev,
 				_onNextFunc: this.next,
-				controls: _createControls(child.props,	index, ( this.props.children.length - 1 ))
+				controls: _createControls(child.props,	index, ( this.props.children.length - 1 )),
+				current: this.state.current,
+				complete: this.state.steps[index].complete,
+				warning: this.state.steps[index].warning,
+				error: this.state.steps[index].error,
+				disableNext: this.state.steps[index].disableNext
 			})
 		);
 	}
@@ -62,48 +68,28 @@ class ReactWizardContainer extends Component {
 		this.setState(newState);
 	}
 
+	renderChildren() {
+		return React.Children.map(this.childrenWithControls,
+			(child, index) => {
+				return React.cloneElement(child, {
+					current: this.state.current,
+					complete: this.state.steps[index].complete,
+					warning: this.state.steps[index].warning,
+					error: this.state.steps[index].error,
+					disableNext: this.state.steps[index].disableNext
+				})
+			}
+		);
+	}
+
 	render() {
 		let { children, ...rest } = this.props;
 
-		this.childrenWithControls = React.Children.map(this.childrenWithControls,
-			(child, index) => React.cloneElement(child, {
-				current: this.state.current,
-				complete: this.state.steps[index].complete,
-				warning: this.state.steps[index].warning,
-				error: this.state.steps[index].error,
-				disableNext: this.state.steps[index].disableNext
-			})
-		);
-
-		return <ReactWizard currentStepStatus={ this.state.steps[this.state.current] }>{ this.childrenWithControls }</ReactWizard>;
+		return <ReactWizard currentStepStatus={ this.state.steps[this.state.current] }>{ this.renderChildren() }</ReactWizard>;
 	}
 }
 
 export default ReactWizardContainer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Internal functions */
 
