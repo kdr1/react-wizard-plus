@@ -19,10 +19,10 @@ class StepContainer extends Component {
 
 			switch (control.type) {
 				case 0:
-					_control = _controlWithProps(i, this.gotoStep, control.validationFunc, (props.current - 1), false, control.label);
+					_control = _controlWithProps(i, this.gotoStep, control.validationFunc, (props.index - 1), false, control.label);
 					break;
 				case 1:
-					_control = _controlWithProps(i, this.gotoStep, control.validationFunc, (props.current + 1), props.disableNext, control.label);
+					_control = _controlWithProps(i, this.gotoStep, control.validationFunc, (props.index + 1), props.disableNext, control.label);
 					break;
 				case 2:
 					_control = _controlWithProps(i, this.gotoStep, control.validationFunc, undefined, props.disableNext, control.label);
@@ -31,17 +31,23 @@ class StepContainer extends Component {
 
 			this.controls = this.controls ? this.controls.concat(_control) : new Array(_control);
 		}
-
-		console.log(this.controls);
 	}
 
 	gotoStep(validationFunc, indexToGoto) {
-		console.log(validationFunc, indexToGoto);
+		const props = this.props;
+		const callback = typeof indexToGoto !== "undefined" ? indexToGoto > props.index ? props._onNextFunc : props._onPrevFunc : props._onCompleteFunc;
+
+		return callback(validationFunc, indexToGoto);
 	}
 
 	render() {
 		let {
+			index,
 			controls,
+			current,
+			complete,
+			warning,
+			error,
 			disableNext,
 			component,
 			title,
@@ -51,14 +57,17 @@ class StepContainer extends Component {
 			indicatorIconClasses,
 			prevLabel,
 			onPrevFunc,
+			_onPrevFunc,
 			nextLabel,
 			onNextFunc,
+			_onNextFunc,
 			completeLabel,
 			onCompleteFunc,
+			_onCompleteFunc,
 			...rest
 		} = this.props;
 
-		return <Step controls={ this.controls } >{ component }</Step>;
+		return <Step isActive={ current === index } status={ { complete: complete, warning: warning, error: error } } controls={ this.controls } >{ component }</Step>;
 	}
 }
 
