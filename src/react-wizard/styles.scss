@@ -1,0 +1,79 @@
+$rw-primary-color-1: #008AA4;
+$rw-primary-color-2: #50B948;
+$rw-primary-color-3: #FA8B29;
+$rw-primary-color-4: #E50000;
+
+$rw-secondary-color-1: lighten($rw-primary-color-1, 5%);
+$rw-secondary-color-2: lighten($rw-primary-color-2, 5%);
+$rw-secondary-color-3: lighten($rw-primary-color-3, 5%);
+$rw-secondary-color-4: lighten($rw-primary-color-4, 5%);
+
+$rw-tertiary-color-1: #B6B5B5;
+$rw-tertiary-color-2: #EFEFEF;
+$rw-tertiary-color-3: darken($rw-primary-color-2, 5%);
+$rw-tertiary-color-4: darken($rw-primary-color-3, 10%);
+$rw-tertiary-color-5: darken($rw-primary-color-4, 10%);
+
+$rw-white: #FFFFFF;
+$rw-black: #222222;
+
+
+$rw-background-color: $rw-tertiary-color-2;
+$rw-border-color: $rw-tertiary-color-1;
+$rw-border: 1px solid $rw-border-color;
+$rw-border-radius: 0.5rem;
+$rw-complete-color: $rw-tertiary-color-3;
+$rw-warning-color: $rw-tertiary-color-4;
+$rw-error-color: $rw-tertiary-color-5;
+$rw-step-and-header-padding: 1rem;
+
+$rw-bs-x: 16rem;
+$rw-bs-y: -36rem;
+$rw-bs-blur: 0rem;
+$rw-bs-spread: -36rem;
+$rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
+
+.react-wizard {
+	background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-1, 61%));
+	background-color: $rw-background-color;
+	border-radius: $rw-border-radius;
+	border: $rw-border;
+	overflow: hidden;
+	box-shadow: inset $rw-bs $rw-secondary-color-1;
+	-webkit-box-shadow: inset $rw-bs $rw-secondary-color-1;
+	-moz-box-shadow: inset $rw-bs $rw-secondary-color-1;
+	min-height: 30rem;
+	min-width: 45rem;
+	//@import "../step/styles.scss";
+	//@import "../header/styles.scss";
+	&.complete {
+		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-2, 40%));
+		box-shadow: inset $rw-bs $rw-secondary-color-2;
+		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-2;
+		-moz-box-shadow: inset $rw-bs $rw-secondary-color-2;
+	}
+	&.warning {
+		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-3, 35%));
+		box-shadow: inset $rw-bs $rw-secondary-color-3;
+		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-3;
+		-moz-box-shadow: inset $rw-bs $rw-secondary-color-3;
+	}
+	&.error {
+		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-4, 50%));
+		box-shadow: inset $rw-bs $rw-secondary-color-4;
+		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-4;
+		-moz-box-shadow: inset $rw-bs $rw-secondary-color-4;
+	}
+	.sr-only {
+	    position: absolute !important;
+	    width: 1px;
+	    height: 1px;
+	    overflow: hidden;
+	    clip: rect(0, 0, 0, 0);
+	}
+	.react-wizard-spinner-container {
+		height: 100%;
+		width: 100%;
+		min-height: 32rem;
+	}
+}

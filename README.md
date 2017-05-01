@@ -1,1 +1,3 @@
-# react-wizard-plus
+# React Wizard Plus
+
+Currently in development
