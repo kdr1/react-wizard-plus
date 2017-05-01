@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import { ReactWizard, Step } from "../src";
 
 let stateHydration = {
-	current: 0,
+	current: 1,
 	steps: {
 		0: {
-			disableNext: true
+			complete: true
 		}
 	}
 }
@@ -23,6 +23,10 @@ const stepThreeComponent = (props) => {
 	return <form>Step Three</form>
 }
 
+const stepFourComponent = (props) => {
+	return <form>Step Four</form>
+}
+
 class Root extends Component {
 	constructor(props) {
 		super(props);
@@ -32,7 +36,7 @@ class Root extends Component {
 		return (
 			<div>
 				<ReactWizard
-					hydrateState={ stateHydration }
+					//hydrateState={ stateHydration }
 					//onComplete={}
 					//afterCompleteComponent={}
 					>
@@ -46,7 +50,7 @@ class Root extends Component {
 						//prevLabel=""
 						//onPrevFunc={}
 						//nextLabel=""
-						//onNextFunc={}
+						onNextFunc={ (state) => 1 }
 					/>
 					<Step
 						component={ stepTwoComponent({}) }
@@ -58,11 +62,23 @@ class Root extends Component {
 						//prevLabel=""
 						//onPrevFunc={}
 						//nextLabel=""
-						//onNextFunc={}
+						onNextFunc={ (state) => 2 }
 					/>
 					<Step
 						component={ stepThreeComponent({}) }
 						title="Step Three"
+						//subheading=""
+						//indicatorId=""
+						//indicatorLabel=""
+						//indicatorIconClasses={}
+						//prevLabel=""
+						//onPrevFunc={}
+						//nextLabel=""
+						onNextFunc={ (state) => 0 }
+					/>
+					<Step
+						component={ stepFourComponent({}) }
+						title="Step Four"
 						//subheading=""
 						//indicatorId=""
 						//indicatorLabel=""

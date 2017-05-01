@@ -1,0 +1,17 @@
+$rw-step-background-color: #DFDFDF;
+$rw-subtract-padding: $rw-step-and-header-padding * 2;
+$rw-padding-bottom: 5.2rem;
+
+.react-wizard-step {
+	display: none;
+	padding: $rw-step-and-header-padding;
+	padding-top: 1.5rem;
+	padding-bottom: 5.2rem;
+	height: 30rem - $rw-padding-bottom;
+	font-size: 1.6rem;
+	position: relative;
+	&.active {
+		display: block;
+	}
+	@import "./control/styles.scss";
+}

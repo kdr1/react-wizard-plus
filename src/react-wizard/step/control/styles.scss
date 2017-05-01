@@ -1,0 +1,46 @@
+$rw-control-background-color: $rw-primary-color-1;
+$rw-control-hover-background-color: $rw-secondary-color-1;
+$rw-control-box-shadow: inset 0rem 0rem 1.5rem 0.2rem;
+.react-wizard-controls {
+	position: absolute;
+	bottom: $rw-step-and-header-padding;
+	right: $rw-step-and-header-padding;
+	.react-wizard-control {
+		background-color: $rw-control-background-color;
+		color: $rw-white;
+		padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+		border: none;
+		border-radius: 0.5rem;
+		font-size: 1.4rem;
+		cursor: pointer;
+		font-weight: bold;
+		letter-spacing: 0.15rem;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		&:nth-child(2) {
+			margin-left: 0.5rem;
+		}
+		&:hover, &:focus {
+			outline: none;
+			box-shadow: $rw-control-box-shadow $rw-control-background-color;
+			-webkit-box-shadow: $rw-control-box-shadow $rw-control-background-color;
+			-moz-box-shadow: $rw-control-box-shadow $rw-control-background-color;
+			background-color: $rw-control-hover-background-color;
+			color: $rw-black;
+			background-color: $rw-white;
+		}
+		&.disabled {
+			background-color: darken($rw-tertiary-color-1, 10%);
+			cursor: not-allowed;
+			&:hover, &:focus {
+				background-color: darken($rw-tertiary-color-1, 10%);
+				color: $rw-white;
+				box-shadow: none;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+			}
+		}
+	}
+}
