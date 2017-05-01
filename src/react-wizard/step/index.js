@@ -33,6 +33,15 @@ class StepContainer extends Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps) {
+		let { index, current, complete, warning, error, disableNext } = this.props;
+
+		let isActive = index === current,
+			nextIsActive = nextProps.index === nextProps.current;
+
+		return  isActive !== nextIsActive || complete !== nextProps.complete || warning !== nextProps.warning || error !== nextProps.error ||	disableNext !== nextProps.disableNext;
+	}
+
 	gotoStep(validationFunc, indexToGoto) {
 		const props = this.props;
 		const callback = typeof indexToGoto !== "undefined" ? indexToGoto > props.index ? props._onNextFunc : props._onPrevFunc : props._onCompleteFunc;
@@ -67,7 +76,7 @@ class StepContainer extends Component {
 			...rest
 		} = this.props;
 
-		return <Step isActive={ current === index } status={ { complete: complete, warning: warning, error: error } } controls={ this.controls } >{ component }</Step>;
+		return <Step isActive={ current === index } status={ { complete: complete, warning: warning, error: error, disableNext: disableNext } } controls={ this.controls } >{ component }</Step>;
 	}
 }
 

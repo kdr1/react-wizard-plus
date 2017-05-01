@@ -7,7 +7,6 @@ class Control extends PureComponent {
 
 	render() {
 		let { disabled, onClick, children } = this.props;
-
 		if (disabled) {
 			return (
 				<button
