@@ -1,9 +1,13 @@
 import React from "react";
+import { applyClasses } from "../utils.js";
 
 const ReactWizard = (props) => {
 	let { currentStepStatus, children, ...rest } = props;
+
+	let cases = _cases(currentStepStatus);
+
 	return (
-		<section className={ _applyClasses(currentStepStatus) }>
+		<section className={ applyClasses(_classListArray, cases, "react-wizard") }>
 			{ children }
 		</section>
 	);
@@ -11,22 +15,27 @@ const ReactWizard = (props) => {
 
 export default ReactWizard;
 
-/* Internal functions */
+/* Internal functions, methods, and variables */
 
-function _applyClasses(currentStepStatus) {
-	let classes = new Array("react-wizard");
-
-	if (currentStepStatus.complete) {
-		classes = classes.concat("complete");
+const _classListArray = [
+	{
+		criterion: "complete",
+		className: "complete"
+	},
+	{
+		criterion: "warning",
+		className: "warning"
+	},
+	{
+		criterion: "error",
+		className: "error"
 	}
+];
 
-	if (currentStepStatus.warning) {
-		classes = classes.concat("warning");
+const _cases = (status) => {
+	return {
+		complete: status.complete,
+		warning: status.warning,
+		error: status.error
 	}
-
-	if (currentStepStatus.error) {
-		classes = classes.concat("error");
-	}
-
-	return classes.join(" ");
 }
