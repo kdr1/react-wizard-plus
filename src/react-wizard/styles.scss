@@ -34,8 +34,11 @@ $rw-bs-blur: 0rem;
 $rw-bs-spread: -36rem;
 $rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
 
+$rw-background-gradient-angle: 165deg;
+
 .react-wizard {
-	background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-1, 61%));
+	position: relative;
+	background: linear-gradient($rw-background-gradient-angle, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-1, 61%));
 	background-color: $rw-background-color;
 	border-radius: $rw-border-radius;
 	border: $rw-border;
@@ -48,19 +51,19 @@ $rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
 	@import "./step/styles.scss";
 	@import "./header/styles.scss";
 	&.complete {
-		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-2, 40%));
+		background: linear-gradient($rw-background-gradient-angle, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-2, 40%));
 		box-shadow: inset $rw-bs $rw-secondary-color-2;
 		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-2;
 		-moz-box-shadow: inset $rw-bs $rw-secondary-color-2;
 	}
 	&.warning {
-		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-3, 35%));
+		background: linear-gradient($rw-background-gradient-angle, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-3, 35%));
 		box-shadow: inset $rw-bs $rw-secondary-color-3;
 		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-3;
 		-moz-box-shadow: inset $rw-bs $rw-secondary-color-3;
 	}
 	&.error {
-		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-4, 50%));
+		background: linear-gradient($rw-background-gradient-angle, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-4, 50%));
 		box-shadow: inset $rw-bs $rw-secondary-color-4;
 		-webkit-box-shadow: inset $rw-bs $rw-secondary-color-4;
 		-moz-box-shadow: inset $rw-bs $rw-secondary-color-4;
@@ -76,5 +79,27 @@ $rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
 		height: 100%;
 		width: 100%;
 		min-height: 32rem;
+	}
+	.react-wizard-spinner {
+		position: absolute;
+		top: calc(50% - 5rem);
+		left: calc(50% - 5rem);
+		width: 8rem;
+		height: 8rem;
+		clear: both;
+		border: 1rem rgba($rw-primary-color-1, 1) solid;
+		border-bottom: 1rem rgba($rw-secondary-color-3, 1) solid;
+		border-radius: 50%;
+		-webkit-animation: reactWizardSpinner 0.8s infinite linear;
+		-moz-animation: reactWizardSpinner 0.8s infinite linear;
+		animation: reactWizardSpinner 0.8s infinite linear;
+	}
+	@-webkit-keyframes reactWizardSpinner {
+		from { -webkit-transform: rotate(0deg); }
+		to { -webkit-transform: rotate(360deg); }
+	}
+	@keyframes reactWizardSpinner {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
 	}
 }
