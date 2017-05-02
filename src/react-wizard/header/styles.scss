@@ -23,7 +23,7 @@ $rw-header-bs: $rw-header-bs-x $rw-header-bs-y $rw-header-bs-blur $rw-header-bs-
 			font-size: 1.6rem;
 		}
 	}
-	//@import "../progress-indicator-bar/styles.scss";
+	@import "./indicator-bar/styles.scss";
 }
 
 // these &'s are attched to .react-wizard class'

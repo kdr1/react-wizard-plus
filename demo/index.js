@@ -44,9 +44,9 @@ class Root extends Component {
 						component={ stepOneComponent({}) }
 						title="Step One Title"
 						//subheading=""
-						//indicatorId=""
-						//indicatorLabel=""
-						//indicatorIconClasses={}
+						indicatorId="contact-information"
+						indicatorLabel="Contact Information"
+						indicatorIconClasses={ { complete: "fa fa-check", warning: "fa fa-exclamation-triangle", error: "fa fa-exclamation" } }
 						//prevLabel=""
 						//onPrevFunc={}
 						//nextLabel=""

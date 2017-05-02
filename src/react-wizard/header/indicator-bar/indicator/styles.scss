@@ -1,0 +1,128 @@
+$rw-indicator-circle-background-color: $rw-white;
+$rw-indicator-text-color: $rw-black;
+$rw-indicator-size: 2.6rem;
+$rw-indicator-border-size: 0.2rem;
+$rw-indicator-border-style: solid;
+$rw-indicator-border-color: $rw-primary-color-1;
+$rw-indicator-border: $rw-indicator-border-size $rw-indicator-border-style $rw-indicator-border-color;
+$rw-indicator-active-border: $rw-indicator-border-size $rw-indicator-border-style $rw-indicator-border-color;
+$rw-indicator-complete-border: $rw-indicator-border-size $rw-indicator-border-style $rw-complete-color;
+$rw-indicator-warning-border: $rw-indicator-border-size $rw-indicator-border-style $rw-warning-color;
+$rw-indicator-error-border: $rw-indicator-border-size $rw-indicator-border-style $rw-error-color;
+$rw-indicator-bs: 0rem 0rem 0.75rem 0.1rem;
+$rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
+
+.react-wizard-indicator {
+	height: 100%;
+	background-color: transparent;
+	position: relative;
+	display: inline-block;
+	float: left;
+	.react-wizard-indicator-circle {
+		position: absolute;
+		height: $rw-indicator-size;
+	    width: $rw-indicator-size;
+	    top: -1.3rem;
+	    left: -1.3rem;
+	    border: $rw-indicator-border;
+	    border-radius: 2rem;
+	    background-color: $rw-indicator-circle-background-color;
+	    z-index: 1;
+	    text-align: center;
+	    cursor: pointer;
+	    &:hover {
+	    	box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
+	    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
+	    	-moz-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
+	    }
+	    .react-wizard-indicator-text {
+	    	font-weight: bold;
+	    	font-size: 1.6rem;
+		    top: calc(50% - 0.9rem);
+		    position: relative;
+			color: $rw-indicator-text-color;
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+	    }
+	}
+	&.lead {
+		background-color: $rw-complete-color;
+	}
+	&.complete {
+		background-color: $rw-complete-color;
+		.react-wizard-indicator-circle {
+			border: $rw-indicator-complete-border;
+		    &:hover {
+		    	box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-3;
+		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-3;
+		    	-moz-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-3;
+		    }
+		}
+	}
+	&.warning {
+		background-color: $rw-warning-color;
+		.react-wizard-indicator-circle {
+			border: $rw-indicator-warning-border;
+		    &:hover {
+		    	box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-4;
+		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-4;
+		    	-moz-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-4;
+		    }
+		}
+	}
+	&.error {
+		background-color: $rw-error-color;
+		.react-wizard-indicator-circle {
+			border: $rw-indicator-error-border;
+		    &:hover {
+		    	box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-4;
+		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-4;
+		    	-moz-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-4;
+		    }
+		}
+	}
+	&.active {
+		.react-wizard-indicator-circle {
+			border: $rw-indicator-active-border;
+			background-color: $rw-primary-color-1;
+			box-shadow: $rw-indicator-bs $rw-primary-color-1;
+			cursor: default;
+			.react-wizard-indicator-text {
+				color: $rw-white;
+			}
+		}
+		&.complete {
+			.react-wizard-indicator-circle {
+				border: $rw-indicator-complete-border;
+				background-color: $rw-complete-color;
+				box-shadow: $rw-indicator-bs $rw-complete-color;
+			}
+		}
+		&.warning {
+			.react-wizard-indicator-circle {
+				border: $rw-indicator-warning-border;
+				background-color: $rw-warning-color;
+				box-shadow: $rw-indicator-bs $rw-warning-color;
+			}
+		}
+		&.error {
+			.react-wizard-indicator-circle {
+				border: $rw-indicator-error-border;
+				background-color: $rw-error-color;
+				box-shadow: $rw-indicator-bs $rw-error-color;
+			}
+		}
+	}
+	&.disabled {
+		.react-wizard-indicator-circle {
+			border-color: darken($rw-tertiary-color-1, 10%);
+			background-color: lighten($rw-tertiary-color-1, 10%);
+			box-shadow: none;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			cursor: not-allowed;
+		}
+	}
+}

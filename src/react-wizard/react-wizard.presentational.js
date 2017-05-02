@@ -4,23 +4,23 @@ import { applyClasses } from "../utils.js";
 
 const ReactWizard = (props) => {
 	let {
-		totalSteps,
+		steps,
 		currentStep,
-		currentStepStatus,
+		indicatorProperties,
 		currentStepTitle,
 		currentStepSubheading,
 		children,
 		...rest
 	} = props;
 
-	let cases = _cases(currentStepStatus);
+	let cases = _cases(steps[currentStep]);
 
 	return (
 		<section className={ applyClasses(_classListArray, cases, "react-wizard") }>
 			<Header
-				totalSteps={ totalSteps}
+				indicatorProperties={ indicatorProperties }
+				steps={ steps }
 				currentStep={ currentStep }
-				currentStepStatus={ currentStepStatus }
 				currentStepTitle={ currentStepTitle }
 				currentStepSubheading={ currentStepSubheading } />
 			{ children }
