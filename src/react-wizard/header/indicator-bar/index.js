@@ -1,9 +1,21 @@
 import React, { PureComponent } from "react";
+import { uid } from "../../../utils.js";
 import Indicator from "./indicator";
 
 class IndicatorBar extends PureComponent {
 	constructor(props) {
 		super(props);
+	}
+
+	componentWillMount() {
+		this.styleElId = `rw-indicator-bar-${uid(12)}`;
+
+		let styleEl = document.createElement("STYLE"),
+			head = document.head || document.getElementsByTagName('head')[0];
+
+		styleEl.type = "text/css";
+		styleEl.id = this.styleElId;
+		head.appendChild(styleEl);
 	}
 
 	render() {
@@ -23,6 +35,7 @@ class IndicatorBar extends PureComponent {
 							<Indicator
 								key={ index }
 								style={ { width: ( 100 / ( steps.length + 1 ) + "%") } }
+								styleElId={ this.styleElId }
 								isActive={ currentStep === index }
 								id={ indicatorProperties[index].id }
 								label={ indicatorProperties[index].label }

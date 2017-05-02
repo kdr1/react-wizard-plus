@@ -34,7 +34,23 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 	    	box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
 	    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
 	    	-moz-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-1;
+	    	&:before {
+	    		display: block;
+	    	}
 	    }
+	    &:before {
+    		display: none;
+	    	position: absolute;
+	    	font-size: 1.3rem;
+	    	width: 20rem;
+	    	top: -1.8rem;
+    		left: calc(50% - 10rem);
+    		text-transform: uppercase;
+    		font-weight: bold;
+    		letter-spacing: 0.125rem;
+    		font-family: Helvetica;
+    		color: $rw-tertiary-color-6;
+    	}
 	    .react-wizard-indicator-text {
 	    	font-weight: bold;
 	    	font-size: 1.6rem;
