@@ -1,22 +1,4 @@
-/* This is the structure required to use this function
-
-let classList = [
-	{
-		criterion: "reactWizard",
-		className: "react-wizard"
-	},
-	{
-		criterion: "isActive",
-		className: "active"
-	}
-];
-
-let cases = {
-	reactWizard: true,
-	isActive: true
-};
-
-*/
+import React from "react";
 
 export function applyClasses(classList, cases, defaultClasses) {
 
@@ -44,4 +26,9 @@ export function uid(length) {
 		}
 
 	return _uid.join("");
+}
+
+export function updateChildProps(children, propsFn) {
+	return React.Children.map(children,
+		(child, index) => React.cloneElement(child, propsFn(child, index)));
 }
