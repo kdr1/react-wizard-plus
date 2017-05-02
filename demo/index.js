@@ -42,7 +42,7 @@ class Root extends Component {
 					>
 					<Step
 						component={ stepOneComponent({}) }
-						title="Step One"
+						title="Step One Title"
 						//subheading=""
 						//indicatorId=""
 						//indicatorLabel=""
@@ -54,7 +54,7 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepTwoComponent({}) }
-						title="Step Two"
+						title="Step Two Title"
 						//subheading=""
 						//indicatorId=""
 						//indicatorLabel=""
@@ -66,7 +66,7 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepThreeComponent({}) }
-						title="Step Three"
+						title="Step Three Title"
 						//subheading=""
 						//indicatorId=""
 						//indicatorLabel=""
@@ -78,7 +78,7 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepFourComponent({}) }
-						title="Step Four"
+						title="Step Four Title"
 						//subheading=""
 						//indicatorId=""
 						//indicatorLabel=""

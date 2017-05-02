@@ -1,0 +1,50 @@
+$rw-header-bs-x: -6rem;
+$rw-header-bs-y: 12rem;
+$rw-header-bs-blur: 0rem;
+$rw-header-bs-spread: -12rem;
+$rw-header-bs: $rw-header-bs-x $rw-header-bs-y $rw-header-bs-blur $rw-header-bs-spread;
+
+.react-wizard-header {
+	position: relative;
+	width: 100%;
+	height: 8rem;
+	border-top-right-radius: 0.1rem; // this is only to give the box shadow in top right a curve
+	box-shadow: inset $rw-header-bs $rw-secondary-color-1;
+	-webkit-box-shadow: inset $rw-header-bs $rw-secondary-color-1;
+	-moz-box-shadow: inset $rw-header-bs $rw-secondary-color-1;
+	.padded-area {
+		padding: $rw-step-and-header-padding;
+		.react-wizard-header-title {
+			font-size: 2rem;
+			margin: 0rem;
+			margin-bottom: 0.5rem;
+		}
+		.react-wizard-header-subheading {
+			font-size: 1.6rem;
+		}
+	}
+	//@import "../progress-indicator-bar/styles.scss";
+}
+
+// these &'s are attched to .react-wizard class'
+&.complete {
+	.react-wizard-header {
+		box-shadow: inset $rw-header-bs $rw-secondary-color-2;
+		-webkit-box-shadow: inset $rw-header-bs $rw-secondary-color-2;
+		-moz-box-shadow: inset $rw-header-bs $rw-secondary-color-2;
+	}
+}
+&.warning {
+	.react-wizard-header {
+		box-shadow: inset $rw-header-bs $rw-secondary-color-3;
+		-webkit-box-shadow: inset $rw-header-bs $rw-secondary-color-3;
+		-moz-box-shadow: inset $rw-header-bs $rw-secondary-color-3;
+	}
+}
+&.error {
+	.react-wizard-header {
+		box-shadow: inset $rw-header-bs $rw-secondary-color-4;
+		-webkit-box-shadow: inset $rw-header-bs $rw-secondary-color-4;
+		-moz-box-shadow: inset $rw-header-bs $rw-secondary-color-4;
+	}
+}

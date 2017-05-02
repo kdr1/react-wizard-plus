@@ -12,8 +12,6 @@ class ReactWizardContainer extends Component {
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
 		this.renderChildren = this.renderChildren.bind(this);
-
-		console.log(this.state)
 	}
 
 	componentWillMount() {
@@ -84,8 +82,16 @@ class ReactWizardContainer extends Component {
 
 	render() {
 		let { children, ...rest } = this.props;
-
-		return <ReactWizard currentStepStatus={ this.state.steps[this.state.current] }>{ this.renderChildren() }</ReactWizard>;
+		return (
+			<ReactWizard
+				totalSteps={ this.state.steps.length }
+				currentStep={ this.state.current }
+				currentStepStatus={ this.state.steps[this.state.current] }
+				currentStepTitle={ children[this.state.current].props.title }
+				currentStepSubheading={ children[this.state.current].props.subheading }>
+				{ this.renderChildren() }
+			</ReactWizard>
+		);
 	}
 }
 
