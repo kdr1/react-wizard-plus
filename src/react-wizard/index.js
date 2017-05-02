@@ -12,8 +12,6 @@ class ReactWizardContainer extends Component {
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
 		this.renderChildren = this.renderChildren.bind(this);
-
-		console.log(this.state)
 	}
 
 	componentWillMount() {
@@ -31,6 +29,18 @@ class ReactWizardContainer extends Component {
 				disableNext: this.state.steps[index].disableNext
 			})
 		);
+
+		this.indicatorProperties = new Array();
+
+		let i, len = this.props.children.length;
+
+		for (i = 0; i < len; i++) {
+			this.indicatorProperties = this.indicatorProperties.concat({
+				id: this.props.children[i].props.indicatorId,
+				label: this.props.children[i].props.indicatorLabel,
+				iconClasses: this.props.children[i].props.indicatorIconClasses
+			});
+		}
 	}
 
 	prev(onPrevCallback) {
@@ -85,11 +95,37 @@ class ReactWizardContainer extends Component {
 	render() {
 		let { children, ...rest } = this.props;
 
-		return <ReactWizard currentStepStatus={ this.state.steps[this.state.current] }>{ this.renderChildren() }</ReactWizard>;
+		return (
+			<ReactWizard
+				indicatorProperties= { this.indicatorProperties }
+				steps={ this.state.steps }
+				currentStep={ this.state.current }
+				currentStepTitle={ children[this.state.current].props.title }
+				currentStepSubheading={ children[this.state.current].props.subheading }>
+				{ this.renderChildren() }
+			</ReactWizard>
+		);
 	}
 }
 
 export default ReactWizardContainer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Internal functions, methods, and variables */
 

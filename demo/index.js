@@ -42,11 +42,11 @@ class Root extends Component {
 					>
 					<Step
 						component={ stepOneComponent({}) }
-						title="Step One"
-						//subheading=""
-						//indicatorId=""
-						//indicatorLabel=""
-						//indicatorIconClasses={}
+						title="Contact Information"
+						subheading="Please fill out the below contact information so that we can keep you informed about your order!"
+						indicatorId="contact-information"
+						indicatorLabel="Contact Information"
+						indicatorIconClasses={ { complete: "fa fa-check", warning: "fa fa-exclamation-triangle", error: "fa fa-exclamation" } }
 						//prevLabel=""
 						//onPrevFunc={}
 						//nextLabel=""
@@ -54,10 +54,10 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepTwoComponent({}) }
-						title="Step Two"
-						//subheading=""
+						title="Shipping Information"
+						subheading="We'll ship your order anywhere in the world!"
 						//indicatorId=""
-						//indicatorLabel=""
+						indicatorLabel="Shipping Information"
 						//indicatorIconClasses={}
 						//prevLabel=""
 						//onPrevFunc={}
@@ -66,10 +66,10 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepThreeComponent({}) }
-						title="Step Three"
-						//subheading=""
+						title="Billing Information"
+						subheading="How would you like to pay for your order?"
 						//indicatorId=""
-						//indicatorLabel=""
+						indicatorLabel="Billing Information"
 						//indicatorIconClasses={}
 						//prevLabel=""
 						//onPrevFunc={}
@@ -78,10 +78,10 @@ class Root extends Component {
 					/>
 					<Step
 						component={ stepFourComponent({}) }
-						title="Step Four"
-						//subheading=""
+						title="Survey"
+						subheading="Take a quick survey and get 10% off your order!"
 						//indicatorId=""
-						//indicatorLabel=""
+						indicatorLabel="Take a Survey"
 						//indicatorIconClasses={}
 						//prevLabel=""
 						//onPrevFunc={}

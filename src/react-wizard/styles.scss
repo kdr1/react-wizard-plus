@@ -13,6 +13,7 @@ $rw-tertiary-color-2: #EFEFEF;
 $rw-tertiary-color-3: darken($rw-primary-color-2, 5%);
 $rw-tertiary-color-4: darken($rw-primary-color-3, 10%);
 $rw-tertiary-color-5: darken($rw-primary-color-4, 10%);
+$rw-tertiary-color-6: #7a06b1;
 
 $rw-white: #FFFFFF;
 $rw-black: #222222;
@@ -42,10 +43,10 @@ $rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
 	box-shadow: inset $rw-bs $rw-secondary-color-1;
 	-webkit-box-shadow: inset $rw-bs $rw-secondary-color-1;
 	-moz-box-shadow: inset $rw-bs $rw-secondary-color-1;
-	min-height: 40rem;
+	min-height: 40.75rem;
 	min-width: 60rem;
 	@import "./step/styles.scss";
-	//@import "../header/styles.scss";
+	@import "./header/styles.scss";
 	&.complete {
 		background: linear-gradient(165deg, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-2, 40%));
 		box-shadow: inset $rw-bs $rw-secondary-color-2;

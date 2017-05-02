@@ -1,0 +1,8 @@
+.react-wizard-indicator-bar {
+	position: absolute;
+	height: 0.4rem;
+	width: 100%;
+	bottom: 0rem;
+	background-color: lighten($rw-border-color, 10%);
+	@import "./indicator/styles.scss";
+}
