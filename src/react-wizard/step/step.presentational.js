@@ -1,4 +1,5 @@
 import React from "react";
+import { applyClasses } from "../../utils.js";
 
 const Step = (props) => {
 	let { isActive, status, controls, children, ...rest } = props;
@@ -9,8 +10,10 @@ const Step = (props) => {
 		})
 	);
 
+	let cases = _cases(isActive, status);
+
 	return (
-		<div className={ _applyClasses(isActive, status) }>
+		<div className={ applyClasses(_classListArray, cases, "react-wizard-step") }>
 			{ children }
 			<div className="react-wizard-controls">{ controlsWithStatus }</div>
 		</div>
@@ -20,26 +23,39 @@ const Step = (props) => {
 
 export default Step;
 
-/* Internal functions */
+/* Internal functions, methods, and variables */
 
-function _applyClasses(isActive, status) {
-	let classes = new Array("react-wizard-step");
-
-	if (isActive) {
-		classes = classes.concat("active");
+const _classListArray = [
+	{
+		criterion: "isActive",
+		className: "active"
+	},
+	{
+		criterion: "complete",
+		className: "complete"
+	},
+	{
+		criterion: "warning",
+		className: "warning"
+	},
+	{
+		criterion: "error",
+		className: "error"
 	}
+];
 
-	if (status.complete) {
-		classes = classes.concat("complete");
+const _cases = (isActive, status) => {
+	return {
+		isActive: isActive,
+		complete: status.complete,
+		warning: status.warning,
+		error: status.error
 	}
-
-	if (status.warning) {
-		classes = classes.concat("warning");
-	}
-
-	if (status.error) {
-		classes = classes.concat("error");
-	}
-
-	return classes.join(" ");
 }
+
+
+
+
+
+
+

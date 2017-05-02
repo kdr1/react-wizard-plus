@@ -91,7 +91,7 @@ class ReactWizardContainer extends Component {
 
 export default ReactWizardContainer;
 
-/* Internal functions */
+/* Internal functions, methods, and variables */
 
 function _hydrateState(stateHydration, steps) {
 	let defaultStepState = {

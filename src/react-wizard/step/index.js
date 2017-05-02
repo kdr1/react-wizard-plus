@@ -97,7 +97,7 @@ StepContainer.propTypes = {
 export default StepContainer;
 
 
-/* Internal functions */
+/* Internal functions, methods, and variables */
 
 function _controlWithProps(key, callback, validationFunc, targetIndex, disabled, label) {
 	return <Control key={ key } onClick={ () => callback(validationFunc, targetIndex) } disabled={ disabled }>{ label }</Control>;
