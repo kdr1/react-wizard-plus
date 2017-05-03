@@ -15,6 +15,7 @@ class ReactWizardContainer extends Component {
 		this.reinitHeader = this.reinitHeader.bind(this);
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
+		this.onComplete = this.onComplete.bind(this);
 		this.renderChildren = this.renderChildren.bind(this);
 
 		this.rebuildControls = false;
@@ -34,7 +35,8 @@ class ReactWizardContainer extends Component {
 				index: index,
 				_onPrevFunc: this.prev,
 				_onNextFunc: this.next,
-				controls: _createControls(child.props,	index, ( this.props.children.length - 1 )),
+				_onCompleteFunc: this.onComplete,
+				controls: _createControls(child.props,	index, ( this.props.children.length - 1 ), this.props.onCompleteFunc),
 				current: this.state.current,
 				complete: this.state.steps[index].complete,
 				warning: this.state.steps[index].warning,
@@ -77,7 +79,7 @@ class ReactWizardContainer extends Component {
 		});
 	}
 
-	next(validationFunc, finalStep) {
+	next(validationFunc) {
 		let newState, validationResponse = typeof validationFunc === "function" ? validationFunc(this.state) : 1;
 
 		// case 0 means validation failed
@@ -95,6 +97,23 @@ class ReactWizardContainer extends Component {
 				newState = _newState(this.state, 1, { complete: true, warning: true, error: false, disableNext: false });;
 				break;
 		}
+
+		this.setState(newState);
+	}
+
+	onComplete(validationFunc) {
+		let newState, validationResponse = typeof validationFunc === "function" ? validationFunc(this.state) : 1;
+
+		switch (validationResponse) {
+			case 0:
+				newState = _newState(this.state, 0, { complete: false, warning: false, error: true, disableNext: true });
+				break;
+			case 1:
+				newState = _newState(this.state, 0, { complete: true, warning: false, error: false, disableNext: false });;
+				break;
+		}
+
+		// TODO: After complete component
 
 		this.setState(newState);
 	}
@@ -187,7 +206,7 @@ function _hydrateState(stateHydration, steps) {
 	return { steps: _steps, current: stateHydration ? stateHydration.current : 0 };
 }
 
-function _createControls(childProps, index, endingIndex) {
+function _createControls(childProps, index, endingIndex, wizardOnCompleteFunc) {
 	// control.type number representation:
 	// 0: prev
 	// 1: next
@@ -203,7 +222,7 @@ function _createControls(childProps, index, endingIndex) {
 			_createControl(0, childProps.prevLabel || "PREVIOUS", childProps.onPrevFunc),
 			_createControl(	2,
 							childProps.completeLabel || childProps.nextLabel || "COMPLETE",
-							childProps.onCompleteFunc || childProps.onNextFunc)
+							wizardOnCompleteFunc || childProps.onCompleteFunc || childProps.onNextFunc)
 		];
 			break;
 		default:

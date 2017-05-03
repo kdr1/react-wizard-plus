@@ -18,14 +18,14 @@ class ConditionalRenderWrapper extends PureComponent {
 	}
 
 	render() {
-		let { id, children, loadingSpinner, hydrateState, onComplete, afterCompleteComponent, ...rest } = this.props;
+		let { id, children, loadingSpinner, hydrateState, onCompleteFunc, afterCompleteComponent, ...rest } = this.props;
 		if (children) {
 			return (
 				<ReactWizardContainer
 					ref={ (wizard) => this.wizard = wizard }
 					id={ id }
 					hydrateState={ hydrateState }
-					onComplete={ onComplete }
+					onCompleteFunc={ onCompleteFunc }
 					afterCompleteComponent={ afterCompleteComponent }>
 					{ children }
 				</ReactWizardContainer>
@@ -49,7 +49,7 @@ ConditionalRenderWrapper.propTypes = {
 	id: PropTypes.string,
 	loadingSpinner: PropTypes.element,
 	hydrateState: PropTypes.object,
-	onComplete: PropTypes.func,
+	onCompleteFunc: PropTypes.func,
 	afterCompleteComponent: PropTypes.element
 }
 
