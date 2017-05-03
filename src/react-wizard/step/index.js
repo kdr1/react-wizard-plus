@@ -8,7 +8,7 @@ class StepContainer extends Component {
 	constructor(props) {
 		super(props);
 
-		this.gotoStep = this.gotoStep.bind(this);
+		this.processAction = this.processAction.bind(this);
 		this.applyControls = this.applyControls.bind(this);
 	}
 
@@ -45,13 +45,13 @@ class StepContainer extends Component {
 
 			switch (control.type) {
 				case 0:
-					_control = _controlWithProps(uid(8), this.gotoStep, control.validationFunc, (props.index - 1), false, control.label);
+					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, (props.index - 1), false, control.label);
 					break;
 				case 1:
-					_control = _controlWithProps(uid(8), this.gotoStep, control.validationFunc, (props.index + 1), props.disableNext, control.label);
+					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, (props.index + 1), props.disableNext, control.label);
 					break;
 				case 2:
-					_control = _controlWithProps(uid(8), this.gotoStep, control.validationFunc, undefined, props.disableNext, control.label);
+					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, undefined, props.disableNext, control.label);
 					break;
 			}
 
@@ -59,7 +59,7 @@ class StepContainer extends Component {
 		}
 	}
 
-	gotoStep(validationFunc, indexToGoto) {
+	processAction(validationFunc, indexToGoto) {
 		const props = this.props;
 		const callback = typeof indexToGoto !== "undefined" ? indexToGoto > props.index ? props._onNextFunc : props._onPrevFunc : props._onCompleteFunc;
 

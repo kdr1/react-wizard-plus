@@ -161,6 +161,7 @@ class Root extends Component {
 
 		this.steps = _steps;
 		this.stateHydration = _stateHydration;
+		this.onCompleteFunc = (state) => { console.log(state); return 0; };
 		this.setState(this.state, this.wizard.reinitialize);
 	}
 
@@ -175,7 +176,7 @@ class Root extends Component {
 				<ReactWizard
 					ref={ (wiz) => this.wizard = wiz }
 					hydrateState={ this.stateHydration }
-					//onComplete={}
+					onCompleteFunc={ this.onCompleteFunc }
 					//afterCompleteComponent={}
 					>
 					{ this.steps }
