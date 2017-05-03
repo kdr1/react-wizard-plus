@@ -90,9 +90,9 @@ $rw-background-gradient-angle: 165deg;
 		border: 1rem rgba($rw-primary-color-1, 1) solid;
 		border-bottom: 1rem rgba($rw-secondary-color-3, 1) solid;
 		border-radius: 50%;
-		-webkit-animation: reactWizardSpinner 0.8s infinite linear;
-		-moz-animation: reactWizardSpinner 0.8s infinite linear;
-		animation: reactWizardSpinner 0.8s infinite linear;
+		-webkit-animation: reactWizardSpinner 1.25s infinite linear;
+		-moz-animation: reactWizardSpinner 1.25s infinite linear;
+		animation: reactWizardSpinner 1.25s infinite linear;
 	}
 	@-webkit-keyframes reactWizardSpinner {
 		from { -webkit-transform: rotate(0deg); }

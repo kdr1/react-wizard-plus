@@ -5,9 +5,20 @@ import Indicator from "./indicator";
 class IndicatorBar extends PureComponent {
 	constructor(props) {
 		super(props);
+
+		this.init = this.init.bind(this);
+		this.reinit = this.reinit.bind(this);
 	}
 
 	componentWillMount() {
+		this.init();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		//console.log(nextProps)
+	}
+
+	init() {
 		this.styleElId = `rw-indicator-bar-${uid(12)}`;
 
 		let styleEl = document.createElement("STYLE"),
@@ -16,6 +27,14 @@ class IndicatorBar extends PureComponent {
 		styleEl.type = "text/css";
 		styleEl.id = this.styleElId;
 		head.appendChild(styleEl);
+	}
+
+	reinit() {
+		document.getElementById(this.styleElId).innerText = "";
+		let step;
+		for (step in this.props.steps) {
+			this[`indicator${step}`].reinit();
+		}
 	}
 
 	render() {
@@ -30,22 +49,25 @@ class IndicatorBar extends PureComponent {
 				</Indicator>
 				{
 					steps.map((indicator, index) => {
-						step = steps[index];
-						return (
-							<Indicator
-								key={ index }
-								style={ { width: ( 100 / ( steps.length + 1 ) + "%") } }
-								styleElId={ this.styleElId }
-								isActive={ currentStep === index }
-								id={ indicatorProperties[index].id }
-								label={ indicatorProperties[index].label }
-								iconClasses={ indicatorProperties[index].iconClasses }
-								complete={ step.complete }
-								warning={ step.warning }
-								error={ step.error }
-								onClick={ () => true }
-								disabled={ !index ? false : steps[ index - 1 ].disableNext } />
-						)
+						if (indicatorProperties[index]) {
+							step = steps[index];
+							return (
+								<Indicator
+									ref={ (indicator) => this[`indicator${index}`] = indicator }
+									key={ index }
+									style={ { width: ( 100 / ( steps.length + 1 ) + "%") } }
+									styleElId={ this.styleElId }
+									isActive={ currentStep === index }
+									id={ indicatorProperties[index].id }
+									label={ indicatorProperties[index].label }
+									iconClasses={ indicatorProperties[index].iconClasses }
+									complete={ step.complete }
+									warning={ step.warning }
+									error={ step.error }
+									onClick={ () => true }
+									disabled={ !index ? false : steps[ index - 1 ].disableNext } />
+							)
+						}
 					})
 				}
 			</div>
