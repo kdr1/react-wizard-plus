@@ -7,9 +7,11 @@ import "./styles.scss";
 class ConditionalRenderWrapper extends PureComponent {
 	constructor(props) {
 		super(props);
+
+		this.reinitialize = this.reinitialize.bind(this);
 	}
 
-	rehydrateState() {
+	reinitialize() {
 		if (this.wizard) {
 			this.wizard.rehydrateState();
 		}

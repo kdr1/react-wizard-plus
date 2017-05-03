@@ -12,9 +12,12 @@ class ReactWizardContainer extends Component {
 
 		this.rehydrateState = this.rehydrateState.bind(this);
 		this.init = this.init.bind(this);
+		this.reinitHeader = this.reinitHeader.bind(this);
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
 		this.renderChildren = this.renderChildren.bind(this);
+
+		this.rebuildControls = false;
 	}
 
 	componentWillMount() {
@@ -22,10 +25,10 @@ class ReactWizardContainer extends Component {
 	}
 
 	rehydrateState() {
-		this.setState(_hydrateState(this.props.hydrateState, this.props.children), this.init);
+		this.setState(_hydrateState(this.props.hydrateState, this.props.children), this.reinitHeader);
 	}
 
-	init() {
+	init(reinitHeader) {
 		this.childrenWithControls = updateChildProps(this.props.children, (child, index) => {
 			return {
 				index: index,
@@ -43,7 +46,6 @@ class ReactWizardContainer extends Component {
 		this.indicatorProperties = new Array();
 
 		let i, len = this.props.children.length;
-
 		for (i = 0; i < len; i++) {
 			this.indicatorProperties = this.indicatorProperties.concat({
 				id: this.props.children[i].props.indicatorId,
@@ -51,6 +53,15 @@ class ReactWizardContainer extends Component {
 				iconClasses: this.props.children[i].props.indicatorIconClasses
 			});
 		}
+
+		if (reinitHeader) {
+			this.rebuildControls = true;
+			this.setState(this.state, this.wizard.header.indicatorBar.reinit);
+		}
+	}
+
+	reinitHeader() {
+		this.init(true);
 	}
 
 	prev(onPrevCallback) {
@@ -88,31 +99,36 @@ class ReactWizardContainer extends Component {
 		this.setState(newState);
 	}
 
-	renderChildren() {
-		return React.Children.map(this.childrenWithControls,
-			(child, index) => {
-				return React.cloneElement(child, {
-					current: this.state.current,
-					complete: this.state.steps[index].complete,
-					warning: this.state.steps[index].warning,
-					error: this.state.steps[index].error,
-					disableNext: this.state.steps[index].disableNext
-				})
+	renderChildren(rebuildControls) {
+		return updateChildProps(this.childrenWithControls, (child, index) => {
+			return {
+				current: this.state.current,
+				complete: this.state.steps[index].complete,
+				warning: this.state.steps[index].warning,
+				error: this.state.steps[index].error,
+				disableNext: this.state.steps[index].disableNext,
+				rebuildControls: rebuildControls
 			}
-		);
+		});
 	}
 
 	render() {
-		let { children, ...rest } = this.props;
+		let { children, ...rest } = this.props, rebuildControls = false;
+
+		if (this.rebuildControls) {
+			this.rebuildControls = false;
+			rebuildControls = true;
+		}
 
 		return (
 			<ReactWizard
+				ref={ (wizard) => this.wizard = wizard }
 				indicatorProperties= { this.indicatorProperties }
 				steps={ this.state.steps }
 				currentStep={ this.state.current }
 				currentStepTitle={ children[this.state.current].props.title }
 				currentStepSubheading={ children[this.state.current].props.subheading }>
-				{ this.renderChildren() }
+				{ this.renderChildren(rebuildControls) }
 			</ReactWizard>
 		);
 	}

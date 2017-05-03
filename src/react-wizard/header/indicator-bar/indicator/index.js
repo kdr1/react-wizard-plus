@@ -4,10 +4,25 @@ import { applyClasses, uid } from "../../../../utils.js";
 class Indicator extends PureComponent {
 	constructor(props) {
 		super(props);
+
+		this.init = this.init.bind(this);
+		this.reinit = this.reinit.bind(this);
 	}
 
 	componentWillMount() {
+		this.init();
+	}
+
+	init() {
 		this.id = this.props.id ? this.props.id : `rw-indicator-${uid(12)}`;
+
+		if (this.props.styleElId && this.props.label) {
+			let pseudoStyles = `#${this.id} .react-wizard-indicator-circle:before { content: "${this.props.label}" }`;
+			document.getElementById(this.props.styleElId).innerText += pseudoStyles;
+		}
+	}
+
+	reinit() {
 		if (this.props.styleElId && this.props.label) {
 			let pseudoStyles = `#${this.id} .react-wizard-indicator-circle:before { content: "${this.props.label}" }`;
 			document.getElementById(this.props.styleElId).innerText += pseudoStyles;

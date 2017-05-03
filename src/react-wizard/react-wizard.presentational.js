@@ -1,31 +1,38 @@
-import React from "react";
+import React, { Component } from "react";
 import Header from "./header";
 import { applyClasses } from "../utils.js";
 
-const ReactWizard = (props) => {
-	let {
-		steps,
-		currentStep,
-		indicatorProperties,
-		currentStepTitle,
-		currentStepSubheading,
-		children,
-		...rest
-	} = props;
+class ReactWizard extends Component {
+	constructor(props) {
+		super(props);
+	}
 
-	let cases = _cases(steps[currentStep]);
+	render() {
+		let {
+			steps,
+			currentStep,
+			indicatorProperties,
+			currentStepTitle,
+			currentStepSubheading,
+			children,
+			...rest
+		} = this.props;
 
-	return (
-		<section className={ applyClasses(_classListArray, cases, "react-wizard") }>
-			<Header
-				indicatorProperties={ indicatorProperties }
-				steps={ steps }
-				currentStep={ currentStep }
-				currentStepTitle={ currentStepTitle }
-				currentStepSubheading={ currentStepSubheading } />
-			{ children }
-		</section>
-	);
+		let cases = _cases(steps[currentStep]);
+
+		return (
+			<section className={ applyClasses(_classListArray, cases, "react-wizard") }>
+				<Header
+					ref={ (header) => this.header = header }
+					indicatorProperties={ indicatorProperties }
+					steps={ steps }
+					currentStep={ currentStep }
+					currentStepTitle={ currentStepTitle }
+					currentStepSubheading={ currentStepSubheading } />
+				{ children }
+			</section>
+		);
+	}
 }
 
 export default ReactWizard;
