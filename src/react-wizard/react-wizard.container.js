@@ -109,7 +109,7 @@ class ReactWizardContainer extends Component {
 				newState = _newState(this.state, 0, { complete: false, warning: false, error: true, disableNext: true });
 				break;
 			case 1:
-				newState = _newState(this.state, 0, { complete: true, warning: false, error: false, disableNext: false });;
+				newState = _newState(this.state, 0, { complete: true, warning: false, error: false, disableNext: true });;
 				break;
 		}
 

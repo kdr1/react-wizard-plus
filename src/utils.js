@@ -32,3 +32,16 @@ export function updateChildProps(children, propsFn) {
 	return React.Children.map(children,
 		(child, index) => React.cloneElement(child, propsFn(child, index)));
 }
+
+export function camelCase(str) {
+	let strArr = str.split(" "),
+		i,
+		len = strArr.length,
+		newArr = new Array();
+
+	for (i = 0; i < len; i++) {
+		newArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
+	}
+
+	return newArr.join("");
+}

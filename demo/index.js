@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { ReactWizard, Step } from "../src";
 
 const stepOneComponent = (props) => {
-	return <form>Step One</form>
+	return <form>Step One: { props.label }</form>
 }
 
 const stepTwoComponent = (props) => {
@@ -37,29 +37,23 @@ class Root extends Component {
 	}
 
 	setData() {
-		let stateHydration = {
-			current: 1,
-			steps: {
-				0: {
-					complete: true
-				}
-			}
-		}
+		let stateHydration = null;
 
 		let mockData = [
 			{
-				component: stepOneComponent,
+				component: stepOneComponent.bind(this, { label: "Booyah!" }),
 				title: "Contact Information",
 				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
-				indicatorLabel: "Contact Information",
-				onNextFunc: comp1callback.bind(this)
+				indicatorLabel: "Contact Information"
 			},
 			{
 				component: stepTwoComponent,
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
-				onNextFunc: (state) => 1
+				onNextFunc: (state) => 1,
+				className: "test classes to add",
+				id: "myID"
 			},
 			{
 				component: stepThreeComponent,
@@ -69,24 +63,7 @@ class Root extends Component {
 			}
 		];
 
-		let i, len = mockData.length, steps = new Array(), step;
-
-		for (i = 0; i < len; i++) {
-			step = mockData[i];
-			steps = steps.concat(
-				<Step
-					key={ "myWizardStep_" + i }
-					component={ step.component({}) }
-					title={ step.title }
-					subheading={ step.subheading }
-					indicatorLabel={ step.indicatorLabel }
-					nextLabel={ step.nextLabel }
-					onNextFunc={ step.onNextFunc }
-				/>
-			)
-		}
-
-		this.steps = steps;
+		this.steps = this.wizard.createSteps(mockData);
 		this.stateHydration = stateHydration;
 		this.setState({
 			...this.state,
@@ -95,60 +72,54 @@ class Root extends Component {
 	}
 
 	setNewData() {
+		let iconClasses = {
+			complete: "fa fa-check",
+			warning: "fa fa-exclamation-triangle",
+			error: "fa fa-exclamation"
+		}
+
 		let _mockData = [
 			{
-				component: stepOneComponent,
+				component: stepOneComponent.bind(this, { label: "Brand new and shinny!" }),
 				title: "Contact Information",
 				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
 				indicatorLabel: "Contact Information",
-				onNextFunc: (state) => 1
+				onNextFunc: (state) => 1,
+				indicatorIconClasses: iconClasses
 			},
 			{
 				component: stepTwoComponent,
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
-				onNextFunc: (state) => 1
+				onNextFunc: (state) => 1,
+				indicatorIconClasses: iconClasses
 			},
 			{
 				component: (props) => { return <div>Step four componnet</div>; },
 				title: "More stuff?",
 				subheading: "Another subheading to wow you with!",
 				indicatorLabel: "More stuff",
-				nextLabel: "FORWARD NOW",
-				onNextFunc: (state) => 1
+				onNextFunc: (state) => 1,
+				indicatorIconClasses: iconClasses
 			},
 			{
 				component: stepThreeComponent,
 				title: "Billing Information",
 				subheading: "How would you like to pay for your order?",
-				indicatorLabel: "Billing Information"
+				indicatorLabel: "Billing Information",
+				onNextFunc: (state) => { return 2 },
+				indicatorIconClasses: iconClasses
 			},
 			{
 				component: (props) => { return <div>Step five componnet</div>; },
 				title: "This is new",
 				subheading: "Ipsum gipsum loriem dipsum",
 				indicatorLabel: "This is new",
-				nextLabel: "WE'RE DONE HERE",
+				nextLabel: "SUBMIT",
+				indicatorIconClasses: iconClasses
 			}
 		];
-
-		let _i, _len = _mockData.length, _steps = new Array(), _step;
-
-		for (_i = 0; _i < _len; _i++) {
-			_step = _mockData[_i];
-			_steps = _steps.concat(
-				<Step
-					key={ "myWizardStep_" + _i }
-					component={ _step.component({}) }
-					title={ _step.title }
-					subheading={ _step.subheading }
-					indicatorLabel={ _step.indicatorLabel }
-					nextLabel={ _step.nextLabel }
-					onNextFunc={ _step.onNextFunc }
-				/>
-			)
-		}
 
 		let _stateHydration = {
 			current: 1,
@@ -159,7 +130,7 @@ class Root extends Component {
 			}
 		}
 
-		this.steps = _steps;
+		this.steps = this.wizard.createSteps(_mockData);
 		this.stateHydration = _stateHydration;
 		this.onCompleteFunc = (state) => { console.log(state); return 0; };
 		this.setState(this.state, this.wizard.reinitialize);
@@ -189,61 +160,3 @@ class Root extends Component {
 }
 
 ReactDOM.render(<Root />, document.getElementById("app"));
-
-
-
-
-/*
-
-
-					<Step
-						component={ stepOneComponent({}) }
-						title="Contact Information"
-						subheading="Please fill out the below contact information so that we can keep you informed about your order!"
-						indicatorId="contact-information"
-						indicatorLabel="Contact Information"
-						indicatorIconClasses={ { complete: "fa fa-check", warning: "fa fa-exclamation-triangle", error: "fa fa-exclamation" } }
-						//prevLabel=""
-						//onPrevFunc={}
-						//nextLabel=""
-						onNextFunc={ (state) => 1 }
-					/>
-					<Step
-						component={ stepTwoComponent({}) }
-						title="Shipping Information"
-						subheading="We'll ship your order anywhere in the world!"
-						//indicatorId=""
-						indicatorLabel="Shipping Information"
-						//indicatorIconClasses={}
-						//prevLabel=""
-						//onPrevFunc={}
-						//nextLabel=""
-						onNextFunc={ (state) => 2 }
-					/>
-					<Step
-						component={ stepThreeComponent({}) }
-						title="Billing Information"
-						subheading="How would you like to pay for your order?"
-						//indicatorId=""
-						indicatorLabel="Billing Information"
-						//indicatorIconClasses={}
-						//prevLabel=""
-						//onPrevFunc={}
-						//nextLabel=""
-						onNextFunc={ (state) => 0 }
-					/>
-					<Step
-						component={ stepFourComponent({}) }
-						title="Survey"
-						subheading="Take a quick survey and get 10% off your order!"
-						//indicatorId=""
-						indicatorLabel="Take a Survey"
-						//indicatorIconClasses={}
-						//prevLabel=""
-						//onPrevFunc={}
-						//nextLabel=""
-						//onNextFunc={}
-					/>
-
-
-*/

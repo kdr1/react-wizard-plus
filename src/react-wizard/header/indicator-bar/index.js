@@ -51,16 +51,29 @@ class IndicatorBar extends PureComponent {
 					steps.map((indicator, index) => {
 						if (indicatorProperties[index]) {
 							step = steps[index];
+
+							let iconClasses;
+							if (indicatorProperties[index].iconClasses) {
+								if (step.error) {
+									iconClasses = indicatorProperties[index].iconClasses.error;
+								} else if (step.warning) {
+									iconClasses = indicatorProperties[index].iconClasses.warning;
+								} else if (step.complete) {
+									iconClasses = indicatorProperties[index].iconClasses.complete;
+								}
+							}
+
 							return (
 								<Indicator
 									ref={ (indicator) => this[`indicator${index}`] = indicator }
+									index={ index }
 									key={ index }
 									style={ { width: ( 100 / ( steps.length + 1 ) + "%") } }
 									styleElId={ this.styleElId }
 									isActive={ currentStep === index }
 									id={ indicatorProperties[index].id }
 									label={ indicatorProperties[index].label }
-									iconClasses={ indicatorProperties[index].iconClasses }
+									iconClasses={ iconClasses }
 									complete={ step.complete }
 									warning={ step.warning }
 									error={ step.error }

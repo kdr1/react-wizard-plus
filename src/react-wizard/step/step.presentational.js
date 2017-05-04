@@ -2,7 +2,7 @@ import React from "react";
 import { applyClasses } from "../../utils.js";
 
 const Step = (props) => {
-	let { isActive, status, controls, children, ...rest } = props;
+	let { id, className, isActive, status, controls, children, ...rest } = props;
 
 	let controlsWithStatus = React.Children.map(controls,
 		(control, index) => React.cloneElement(control, {
@@ -13,7 +13,7 @@ const Step = (props) => {
 	let cases = _cases(isActive, status);
 
 	return (
-		<div className={ applyClasses(_classListArray, cases, "react-wizard-step") }>
+		<div id={ id } className={ applyClasses(_classListArray, cases, `react-wizard-step ${className}`) }>
 			{ children }
 			<div className="react-wizard-controls">{ controlsWithStatus }</div>
 		</div>
