@@ -11,7 +11,6 @@ class ConditionalRenderWrapper extends PureComponent {
 		super(props);
 
 		this.reinitialize = this.reinitialize.bind(this);
-		this.createSteps = this.createSteps.bind(this);
 	}
 
 	reinitialize() {
@@ -20,44 +19,8 @@ class ConditionalRenderWrapper extends PureComponent {
 		}
 	}
 
-	createSteps(stepsData) {
-		if (!Array.isArray(stepsData)) throw new Error(`ReactWizard.createSteps requires the stepsData argument to be an Array.`);
-		let i,
-			len = stepsData.length,
-			steps = new Array(),
-			step;
-
-		for (i = 0; i < len; i++) {
-			step = stepsData[i];
-
-			if (typeof step !== "object") throw new Error(`Each index of stepsData must be an object representing the props of a <Step /> component`);
-
-			steps = steps.concat(
-				<Step
-					key={ `${camelCase(step.title)}-${uid(4)}` }
-					component={ step.component() }
-					title={ step.title }
-					subheading={ step.subheading }
-					id={ step.id }
-					className={ step.className }
-					indicatorId={ step.indicatorId }
-					indicatorLabel={ step.indicatorLabel }
-					indicatorIconClasses={ step.indicatorIconClasses }
-					prevLabel={ step.prevLabel }
-					onPrevFunc={ step.onPrevFunc }
-					nextLabel={ step.nextLabel }
-					onNextFunc={ step.onNextFunc }
-					completeLabel={ step.completeLabel }
-					onCompleteFunc={ step.onCompleteFunc }
-				/>
-			)
-		}
-console.log(steps)
-		return steps;
-	}
-
 	render() {
-		let { id, children, loadingSpinner, hydrateState, onCompleteFunc, afterCompleteComponent, ...rest } = this.props;
+		let { id, children, loadingSpinnerClass, hydrateState, onCompleteFunc, afterCompleteComponent, ...rest } = this.props;
 		if (children) {
 			return (
 				<ReactWizardContainer
@@ -71,14 +34,10 @@ console.log(steps)
 			);
 		} else {
 			return (
-				<div className="react-wizard">
+				<section className="react-wizard">
 					<div className="react-wizard-header" />
-					{
-						loadingSpinner ?
-							loadingSpinner :
-							<div className="react-wizard-spinner" />
-					}
-				</div>
+					<div className={ loadingSpinnerClass ? loadingSpinnerClass : "react-wizard-spinner" } />
+				</section>
 			);
 		}
 	}
@@ -86,10 +45,63 @@ console.log(steps)
 
 ConditionalRenderWrapper.propTypes = {
 	id: PropTypes.string,
-	loadingSpinner: PropTypes.element,
+	loadingSpinnerClass: PropTypes.string,
 	hydrateState: PropTypes.object,
 	onCompleteFunc: PropTypes.func,
 	afterCompleteComponent: PropTypes.element
 }
 
+
+ConditionalRenderWrapper.createSteps = function(stepsData) {
+	if (!Array.isArray(stepsData)) throw new Error(`ReactWizard.createSteps requires the stepsData argument to be an Array.`);
+	let i,
+		len = stepsData.length,
+		steps = new Array(),
+		step;
+
+	for (i = 0; i < len; i++) {
+		step = stepsData[i];
+
+		if (typeof step !== "object") throw new Error(`Each index of stepsData must be an object representing the props of a <Step /> component`);
+
+		steps = steps.concat(
+			<Step
+				key={ `${camelCase(step.title)}-${uid(4)}` }
+				component={ step.component() }
+				title={ step.title }
+				subheading={ step.subheading }
+				id={ step.id }
+				className={ step.className }
+				indicatorId={ step.indicatorId }
+				indicatorLabel={ step.indicatorLabel }
+				indicatorIconClasses={ step.indicatorIconClasses }
+				prevLabel={ step.prevLabel }
+				onPrevFunc={ step.onPrevFunc }
+				nextLabel={ step.nextLabel }
+				onNextFunc={ step.onNextFunc }
+				completeLabel={ step.completeLabel }
+				onCompleteFunc={ step.onCompleteFunc }
+			/>
+		)
+	}
+
+	return steps;
+}
+
+
+
+
+
+
+
 export default ConditionalRenderWrapper;
+
+
+
+
+
+
+
+
+
+

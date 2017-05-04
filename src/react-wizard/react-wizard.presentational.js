@@ -15,16 +15,19 @@ class ReactWizard extends Component {
 			currentStepTitle,
 			currentStepSubheading,
 			children,
+			onIndicatorClick,
+			style,
 			...rest
 		} = this.props;
 
 		let cases = _cases(steps[currentStep]);
 
 		return (
-			<section className={ applyClasses(_classListArray, cases, "react-wizard") }>
+			<section className={ applyClasses(_classListArray, cases, "react-wizard") } style={ style } { ...rest }>
 				<Header
 					ref={ (header) => this.header = header }
 					indicatorProperties={ indicatorProperties }
+					onIndicatorClick={ onIndicatorClick }
 					steps={ steps }
 					currentStep={ currentStep }
 					currentStepTitle={ currentStepTitle }

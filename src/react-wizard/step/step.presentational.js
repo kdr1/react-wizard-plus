@@ -13,7 +13,12 @@ const Step = (props) => {
 	let cases = _cases(isActive, status);
 
 	return (
-		<div id={ id } className={ applyClasses(_classListArray, cases, `react-wizard-step ${className}`) }>
+		<div id={ id } className={
+			applyClasses(_classListArray,
+				cases,
+				!className ? "react-wizard-step" : `react-wizard-step ${className}`
+			)
+		}>
 			{ children }
 			<div className="react-wizard-controls">{ controlsWithStatus }</div>
 		</div>

@@ -9,6 +9,7 @@ class Header extends Component {
 	render() {
 		let {
 			indicatorProperties,
+			onIndicatorClick,
 			steps,
 			currentStep,
 			currentStepTitle,
@@ -27,6 +28,7 @@ class Header extends Component {
 				<IndicatorBar
 					ref={ (indicatorBar) => this.indicatorBar = indicatorBar }
 					indicatorProperties={ indicatorProperties }
+					onIndicatorClick={ onIndicatorClick }
 					steps={ steps }
 					currentStep={ currentStep } />
 			</div>

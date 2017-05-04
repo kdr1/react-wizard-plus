@@ -38,7 +38,7 @@ class IndicatorBar extends PureComponent {
 	}
 
 	render() {
-		let { indicatorProperties, steps, currentStep } = this.props;
+		let { indicatorProperties, onIndicatorClick, steps, currentStep } = this.props;
 		let step;
 
 		return (
@@ -80,7 +80,7 @@ class IndicatorBar extends PureComponent {
 									complete={ step.complete }
 									warning={ step.warning }
 									error={ step.error }
-									onClick={ () => true }
+									onClick={ onIndicatorClick }
 									disabled={ !index ? false : steps[ index - 1 ].disableNext } />
 							)
 						}

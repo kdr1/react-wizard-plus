@@ -55,7 +55,7 @@ class Indicator extends PureComponent {
 				    id={ this.id }
 					style={ style }
 					className={ applyClasses(_classListArray, cases, "react-wizard-indicator") }>
-					<div className="react-wizard-indicator-circle">
+					<div className="react-wizard-indicator-circle" onClick={ onClick.bind(null, index) }>
 						<span className="react-wizard-indicator-text">
 							{
 								!iconClasses ?
