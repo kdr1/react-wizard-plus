@@ -137,6 +137,14 @@ class Root extends Component {
 		this.setState(this.state, this.wizard.reinitialize);
 	}
 
+	disableStep() {
+		this.wizard.disableStep(1);
+	}
+
+	enableStep() {
+		this.wizard.enableStep(1);
+	}
+
 	render() {
 		/*if (!this.steps) {
 			setTimeout(() => {
@@ -181,6 +189,8 @@ class Root extends Component {
 				</ReactWizard>
 				<br />
 				<button type="button" onClick={ this.setNewData }>Inject new data</button>
+				<button type="button" onClick={ this.disableStep.bind(this, 1) }>disale step 2</button>
+				<button type="button" onClick={ this.enableStep.bind(this, 1) }>enable step 2</button>
 			</div>
 		);
 	}
