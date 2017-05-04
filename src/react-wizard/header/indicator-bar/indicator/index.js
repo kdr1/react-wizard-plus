@@ -35,7 +35,7 @@ class Indicator extends PureComponent {
 			style,
 			styleElId,
 			index,
-			isActive,
+			currentStep,
 			id,
 			label,
 			iconClasses,
@@ -43,10 +43,12 @@ class Indicator extends PureComponent {
 			warning,
 			error,
 			onClick,
-			disabled
+			disabled,
+			totalCompelted
 		} = this.props;
 
-		let cases = _cases(isActive, { complete: complete, warning: warning, error: error, disabled: disabled });
+		let _disabled = disabled ? true : totalCompelted < index ? index - currentStep > 1 : false,
+			cases = _cases(index === currentStep, { complete: complete, warning: warning, error: error, disabled: _disabled });
 
 		if (!lead) {
 
@@ -55,7 +57,7 @@ class Indicator extends PureComponent {
 				    id={ this.id }
 					style={ style }
 					className={ applyClasses(_classListArray, cases, "react-wizard-indicator") }>
-					<div className="react-wizard-indicator-circle">
+					<div className="react-wizard-indicator-circle" onClick={ !_disabled ? onClick.bind(null, index) : null }>
 						<span className="react-wizard-indicator-text">
 							{
 								!iconClasses ?

@@ -38,8 +38,14 @@ class IndicatorBar extends PureComponent {
 	}
 
 	render() {
-		let { indicatorProperties, steps, currentStep } = this.props;
-		let step;
+		let { indicatorProperties, onIndicatorClick, steps, currentStep } = this.props;
+		let step, totalCompelted = 0, i, len = steps.length;
+
+		for (i = 0; i < len; i++) {
+			if (steps[i].complete) {
+				totalCompelted++;
+			}
+		}
 
 		return (
 			<div className="react-wizard-indicator-bar">
@@ -70,18 +76,19 @@ class IndicatorBar extends PureComponent {
 								<Indicator
 									ref={ (indicator) => this[`indicator${index}`] = indicator }
 									index={ index }
+									currentStep={ currentStep }
 									key={ index }
 									style={ { width: ( 100 / ( steps.length + 1 ) + "%") } }
 									styleElId={ this.styleElId }
-									isActive={ currentStep === index }
 									id={ indicatorProperties[index].id }
 									label={ indicatorProperties[index].label }
 									iconClasses={ iconClasses }
 									complete={ step.complete }
 									warning={ step.warning }
 									error={ step.error }
-									onClick={ () => true }
-									disabled={ !index ? false : steps[ index - 1 ].disableNext } />
+									onClick={ onIndicatorClick }
+									disabled={ !index ? false : steps[ index - 1 ].disableNext }
+									totalCompelted={ totalCompelted } />
 							)
 						}
 					})

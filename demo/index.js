@@ -52,8 +52,8 @@ class Root extends Component {
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
 				onNextFunc: (state) => 1,
-				className: "test classes to add",
-				id: "myID"
+				className: "some-class-I-need",
+				id: "my-id"
 			},
 			{
 				component: stepThreeComponent,
@@ -63,7 +63,7 @@ class Root extends Component {
 			}
 		];
 
-		this.steps = this.wizard.createSteps(mockData);
+		this.steps = ReactWizard.createSteps(mockData);
 		this.stateHydration = stateHydration;
 		this.setState({
 			...this.state,
@@ -72,11 +72,11 @@ class Root extends Component {
 	}
 
 	setNewData() {
+		this.dataSet = true;
 		let iconClasses = {
 			complete: "fa fa-check",
 			warning: "fa fa-exclamation-triangle",
-			error: "fa fa-exclamation",
-			default: "fa fa-bank"
+			error: "fa fa-exclamation"
 		}
 
 		let _mockData = [
@@ -85,7 +85,7 @@ class Root extends Component {
 				title: "Contact Information",
 				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
 				indicatorLabel: "Contact Information",
-				onNextFunc: (state) => 1,
+				onNextFunc: (state) => { console.log("onNextFunc for Contact Information"); return 1; },
 				indicatorIconClasses: iconClasses
 			},
 			{
@@ -93,7 +93,7 @@ class Root extends Component {
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
-				onNextFunc: (state) => 1,
+				onNextFunc: (state) => { console.log("onNextFunc for Shipping Information"); return 1; },
 				indicatorIconClasses: iconClasses
 			},
 			{
@@ -101,7 +101,7 @@ class Root extends Component {
 				title: "More stuff?",
 				subheading: "Another subheading to wow you with!",
 				indicatorLabel: "More stuff",
-				onNextFunc: (state) => 1,
+				onNextFunc: (state) => { console.log("onNextFunc for More Stuff?"); return 2; },
 				indicatorIconClasses: iconClasses
 			},
 			{
@@ -109,7 +109,7 @@ class Root extends Component {
 				title: "Billing Information",
 				subheading: "How would you like to pay for your order?",
 				indicatorLabel: "Billing Information",
-				onNextFunc: (state) => { return 2 },
+				onNextFunc: (state) => { console.log("onNextFunc for Billing Information"); return 0; },
 				indicatorIconClasses: iconClasses
 			},
 			{
@@ -131,18 +131,44 @@ class Root extends Component {
 			}
 		}
 
-		this.steps = this.wizard.createSteps(_mockData);
+		this.steps = ReactWizard.createSteps(_mockData);
 		this.stateHydration = _stateHydration;
 		this.onCompleteFunc = (state) => { console.log(state); return 0; };
 		this.setState(this.state, this.wizard.reinitialize);
 	}
 
 	render() {
-		if (!this.steps) {
+		/*if (!this.steps) {
 			setTimeout(() => {
-				this.setData();
-			}, 1000);
-		}
+				if (!this.dataSet) {
+					this.setData();
+				}
+			}, 250);
+		}*/
+		this.steps = this.steps ? this.steps : ReactWizard.createSteps([
+			{
+				component: stepOneComponent.bind(this, { label: "Booyah!" }),
+				title: "Contact Information",
+				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
+				indicatorLabel: "Contact Information"
+			},
+			{
+				component: stepTwoComponent,
+				title: "Shipping Information",
+				subheading: "We'll ship your order anywhere in the world!",
+				indicatorLabel: "Shipping Information",
+				onNextFunc: (state) => 1,
+				className: "some-class-I-need",
+				id: "my-id"
+			},
+			{
+				component: stepThreeComponent,
+				title: "Billing Information",
+				subheading: "How would you like to pay for your order?",
+				indicatorLabel: "Billing Information"
+			}
+		]);
+
 		return (
 			<div>
 				<ReactWizard

@@ -13,6 +13,7 @@ class ReactWizardContainer extends Component {
 		this.rehydrateState = this.rehydrateState.bind(this);
 		this.init = this.init.bind(this);
 		this.reinitHeader = this.reinitHeader.bind(this);
+		this.handleIndicatorClick = this.handleIndicatorClick.bind(this);
 		this.prev = this.prev.bind(this);
 		this.next = this.next.bind(this);
 		this.onComplete = this.onComplete.bind(this);
@@ -46,6 +47,8 @@ class ReactWizardContainer extends Component {
 		});
 
 		this.indicatorProperties = new Array();
+		this.onPrevFuncs = new Array();
+		this.onNextFuncs = new Array();
 
 		let i, len = this.props.children.length;
 		for (i = 0; i < len; i++) {
@@ -54,6 +57,9 @@ class ReactWizardContainer extends Component {
 				label: this.props.children[i].props.indicatorLabel,
 				iconClasses: this.props.children[i].props.indicatorIconClasses
 			});
+
+			this.onPrevFuncs = [ ...this.onPrevFuncs, this.props.children[i].props.onPrevFunc ];
+			this.onNextFuncs = [ ...this.onNextFuncs, this.props.children[i].props.onNextFunc ];
 		}
 
 		if (reinitHeader) {
@@ -64,6 +70,65 @@ class ReactWizardContainer extends Component {
 
 	reinitHeader() {
 		this.init(true);
+	}
+
+	handleIndicatorClick(targetIndex) {
+		let current = this.state.current,
+			steps = this.state.steps,
+			advancing = targetIndex > current ? true : false,
+			i,
+			cumulativeEndState = { current: this.state.current, steps: Object.assign([], this.state.steps) },
+			validationResult;
+
+		if (advancing) {
+			for (i = current; i < targetIndex; i++) {
+
+				validationResult = this.onNextFuncs[i] ? this.onNextFuncs[i](this.state) : 1;
+
+				switch (validationResult) {
+					case 0:
+						cumulativeEndState = {
+							...cumulativeEndState,
+							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: false, warning: false, error: true, disableNext: true } })
+						};
+						break;
+					case 1:
+						cumulativeEndState = {
+							...cumulativeEndState,
+							current: cumulativeEndState.current + 1,
+							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: true, warning: false, error: false, disableNext: false } })
+						};
+						break;
+					case 2:
+						cumulativeEndState = {
+							...cumulativeEndState,
+							current: cumulativeEndState.current + 1,
+							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: true, warning: true, error: false, disableNext: false } })
+						};
+						break;
+				}
+			}
+		} else {
+			for (i = current; i > targetIndex; i--) {
+
+				validationResult = this.onPrevFuncs[i] ? this.onPrevFuncs[i](this.state) : 1;
+
+				switch (validationResult) {
+					case 1:
+						cumulativeEndState = {
+							...cumulativeEndState,
+							current: cumulativeEndState.current - 1
+						};
+						break;
+				}
+			}
+		}
+
+		this.setState({
+			...this.state,
+			current: cumulativeEndState.current,
+			steps: Object.assign([], this.state.steps, cumulativeEndState.steps)
+		});
 	}
 
 	prev(onPrevCallback) {
@@ -132,7 +197,7 @@ class ReactWizardContainer extends Component {
 	}
 
 	render() {
-		let { children, ...rest } = this.props, rebuildControls = false;
+		let { hydrateState, onCompleteFunc, afterCompleteComponent, children, style, ...rest } = this.props, rebuildControls = false;
 
 		if (this.rebuildControls) {
 			this.rebuildControls = false;
@@ -146,7 +211,10 @@ class ReactWizardContainer extends Component {
 				steps={ this.state.steps }
 				currentStep={ this.state.current }
 				currentStepTitle={ children[this.state.current].props.title }
-				currentStepSubheading={ children[this.state.current].props.subheading }>
+				currentStepSubheading={ children[this.state.current].props.subheading }
+				onIndicatorClick={ this.handleIndicatorClick }
+				style={ style }
+				{ ...rest }>
 				{ this.renderChildren(rebuildControls) }
 			</ReactWizard>
 		);
@@ -154,23 +222,6 @@ class ReactWizardContainer extends Component {
 }
 
 export default ReactWizardContainer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Internal functions, methods, and variables */
 
@@ -256,4 +307,14 @@ function _newState(state, changeInCurrentlyActiveStep, currentStepNewStatus) {
 			return currentStepNewStatus;
 		})
 	}
+}
+
+function _insertAtIndexWithoutMutating(arr, index, insertion) {
+	return arr.map((item, i) => {
+		if (index !== i) {
+			return item;
+		}
+
+		return insertion;
+	});
 }
