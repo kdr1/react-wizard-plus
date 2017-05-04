@@ -11,12 +11,22 @@ class ConditionalRenderWrapper extends PureComponent {
 		super(props);
 
 		this.reinitialize = this.reinitialize.bind(this);
+		this.enableStep = this.enableStep.bind(this);
+		this.disableStep = this.disableStep.bind(this);
 	}
 
 	reinitialize() {
 		if (this.wizard) {
 			this.wizard.rehydrateState();
 		}
+	}
+
+	enableStep(index) {
+		this.wizard.enableStep(index);
+	}
+
+	disableStep(index) {
+		this.wizard.disableStep(index);
 	}
 
 	render() {

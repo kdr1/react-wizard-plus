@@ -18,6 +18,8 @@ class ReactWizardContainer extends Component {
 		this.next = this.next.bind(this);
 		this.onComplete = this.onComplete.bind(this);
 		this.renderChildren = this.renderChildren.bind(this);
+		this.disableStep = this.disableStep.bind(this);
+		this.enableStep = this.enableStep.bind(this);
 
 		this.rebuildControls = false;
 	}
@@ -89,21 +91,21 @@ class ReactWizardContainer extends Component {
 					case 0:
 						cumulativeEndState = {
 							...cumulativeEndState,
-							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: false, warning: false, error: true, disableNext: true } })
+							steps: _newStepState(cumulativeEndState.steps, i, { complete: false, warning: false, error: true, disableNext: true })
 						};
 						break;
 					case 1:
 						cumulativeEndState = {
 							...cumulativeEndState,
 							current: cumulativeEndState.current + 1,
-							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: true, warning: false, error: false, disableNext: false } })
+							steps: _newStepState(cumulativeEndState.steps, i, { complete: true, warning: false, error: false, disableNext: false })
 						};
 						break;
 					case 2:
 						cumulativeEndState = {
 							...cumulativeEndState,
 							current: cumulativeEndState.current + 1,
-							steps: Object.assign([], cumulativeEndState.steps, { [i]: { complete: true, warning: true, error: false, disableNext: false } })
+							steps: _newStepState(cumulativeEndState.steps, i, { complete: true, warning: true, error: false, disableNext: false })
 						};
 						break;
 				}
@@ -194,6 +196,20 @@ class ReactWizardContainer extends Component {
 				rebuildControls: rebuildControls
 			}
 		});
+	}
+
+	enableStep(index) {
+		if (index < 1) return false;
+		let targetIndex = index - 1,
+			newStepsState = _newStepState(this.state.steps, targetIndex, { ...this.state.steps[targetIndex], disableNext: false });
+		this.setState({ ...this.state, steps: newStepsState });
+	}
+
+	disableStep(index) {
+		if (index < 1) return false;
+		let targetIndex = index - 1,
+		    newStepsState = _newStepState(this.state.steps, targetIndex, { ...this.state.steps[targetIndex], disableNext: true });
+		this.setState({ ...this.state, steps: newStepsState });
 	}
 
 	render() {
@@ -307,6 +323,10 @@ function _newState(state, changeInCurrentlyActiveStep, currentStepNewStatus) {
 			return currentStepNewStatus;
 		})
 	}
+}
+
+function _newStepState(steps, index, newStepState) {
+	return Object.assign([], steps, { [index]: newStepState });
 }
 
 function _insertAtIndexWithoutMutating(arr, index, insertion) {

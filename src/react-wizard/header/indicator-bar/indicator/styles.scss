@@ -109,7 +109,6 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 		}
 	}
 	&.active {
-		pointer-events: none;
 		.react-wizard-indicator-circle {
 			border: $rw-indicator-active-border;
 			background-color: $rw-primary-color-1;

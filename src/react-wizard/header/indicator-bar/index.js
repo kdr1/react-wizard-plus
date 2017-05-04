@@ -14,10 +14,6 @@ class IndicatorBar extends PureComponent {
 		this.init();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		//console.log(nextProps)
-	}
-
 	init() {
 		this.styleElId = `rw-indicator-bar-${uid(12)}`;
 
