@@ -68,6 +68,8 @@ class StepContainer extends Component {
 
 	render() {
 		let {
+			id,
+			className,
 			index,
 			controls,
 			current,
@@ -94,7 +96,7 @@ class StepContainer extends Component {
 			...rest
 		} = this.props;
 
-		return <Step isActive={ current === index } status={ { complete: complete, warning: warning, error: error, disableNext: disableNext } } controls={ this.controls } >{ component }</Step>;
+		return <Step id={ id } className={ className } isActive={ current === index } status={ { complete: complete, warning: warning, error: error, disableNext: disableNext } } controls={ this.controls } >{ component }</Step>;
 	}
 }
 
@@ -109,7 +111,9 @@ StepContainer.propTypes = {
 	prevLabel: PropTypes.string,
 	onPrevFunc: PropTypes.func,
 	nextLabel: PropTypes.string,
-	onNextFunc: PropTypes.func
+	onNextFunc: PropTypes.func,
+	completeLabel: PropTypes.string,
+	onCompleteFunc: PropTypes.func
 }
 
 export default StepContainer;

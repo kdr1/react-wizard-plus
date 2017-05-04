@@ -34,6 +34,7 @@ class Indicator extends PureComponent {
 			lead,
 			style,
 			styleElId,
+			index,
 			isActive,
 			id,
 			label,
@@ -45,7 +46,7 @@ class Indicator extends PureComponent {
 			disabled
 		} = this.props;
 
-		let cases = _cases({ complete: complete, warning: warning, error: error, disabled: disabled });
+		let cases = _cases(isActive, { complete: complete, warning: warning, error: error, disabled: disabled });
 
 		if (!lead) {
 
@@ -54,8 +55,15 @@ class Indicator extends PureComponent {
 				    id={ this.id }
 					style={ style }
 					className={ applyClasses(_classListArray, cases, "react-wizard-indicator") }>
-					<div
-						className="react-wizard-indicator-circle" />
+					<div className="react-wizard-indicator-circle">
+						<span className="react-wizard-indicator-text">
+							{
+								!iconClasses ?
+									(index + 1) :
+									<i className={ `react-wizard-indicator-icon ${iconClasses}` } />
+							}
+						</span>
+					</div>
 				</div>
 			);
 		} else {
@@ -74,6 +82,10 @@ export default Indicator;
 
 const _classListArray = [
 	{
+		criterion: "isActive",
+		className: "active"
+	},
+	{
 		criterion: "complete",
 		className: "complete"
 	},
@@ -91,8 +103,9 @@ const _classListArray = [
 	}
 ];
 
-const _cases = (status) => {
+const _cases = (isActive, status) => {
 	return {
+		isActive: isActive,
 		complete: status.complete,
 		warning: status.warning,
 		error: status.error,

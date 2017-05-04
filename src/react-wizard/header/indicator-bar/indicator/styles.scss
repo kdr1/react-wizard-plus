@@ -70,6 +70,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 		background-color: $rw-complete-color;
 		.react-wizard-indicator-circle {
 			border: $rw-indicator-complete-border;
+			.react-wizard-indicator-icon {
+				color: $rw-complete-color;
+			}
 		    &:hover {
 		    	box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-3;
 		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-3;
@@ -81,6 +84,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 		background-color: $rw-warning-color;
 		.react-wizard-indicator-circle {
 			border: $rw-indicator-warning-border;
+			.react-wizard-indicator-icon {
+				color: $rw-warning-color;
+			}
 		    &:hover {
 		    	box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-4;
 		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-tertiary-color-4;
@@ -92,6 +98,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 		background-color: $rw-error-color;
 		.react-wizard-indicator-circle {
 			border: $rw-indicator-error-border;
+			.react-wizard-indicator-icon {
+				color: $rw-error-color;
+			}
 		    &:hover {
 		    	box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-4;
 		    	-webkit-box-shadow: inset $rw-indicator-hover-bs $rw-primary-color-4;
@@ -114,6 +123,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 				border: $rw-indicator-complete-border;
 				background-color: $rw-complete-color;
 				box-shadow: $rw-indicator-bs $rw-complete-color;
+				.react-wizard-indicator-icon {
+					color: $rw-white;
+				}
 			}
 		}
 		&.warning {
@@ -121,6 +133,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 				border: $rw-indicator-warning-border;
 				background-color: $rw-warning-color;
 				box-shadow: $rw-indicator-bs $rw-warning-color;
+				.react-wizard-indicator-icon {
+					color: $rw-white;
+				}
 			}
 		}
 		&.error {
@@ -128,6 +143,9 @@ $rw-indicator-hover-bs: 0rem 0rem 1rem 0.1rem;
 				border: $rw-indicator-error-border;
 				background-color: $rw-error-color;
 				box-shadow: $rw-indicator-bs $rw-error-color;
+				.react-wizard-indicator-icon {
+					color: $rw-white;
+				}
 			}
 		}
 	}
