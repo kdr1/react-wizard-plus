@@ -88,20 +88,4 @@ ConditionalRenderWrapper.createSteps = function(stepsData) {
 	return steps;
 }
 
-
-
-
-
-
-
 export default ConditionalRenderWrapper;
-
-
-
-
-
-
-
-
-
-

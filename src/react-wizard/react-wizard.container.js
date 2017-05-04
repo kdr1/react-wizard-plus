@@ -77,7 +77,7 @@ class ReactWizardContainer extends Component {
 			steps = this.state.steps,
 			advancing = targetIndex > current ? true : false,
 			i,
-			cumulativeEndState = { current: new Number(this.state.current), steps: Object.assign([], this.state.steps) },
+			cumulativeEndState = { current: this.state.current, steps: Object.assign([], this.state.steps) },
 			validationResult;
 
 		if (advancing) {
