@@ -52,14 +52,17 @@ class IndicatorBar extends PureComponent {
 						if (indicatorProperties[index]) {
 							step = steps[index];
 
-							let iconClasses;
+							let iconClasses, states;
 							if (indicatorProperties[index].iconClasses) {
+								states = indicatorProperties[index].iconClasses;
 								if (step.error) {
-									iconClasses = indicatorProperties[index].iconClasses.error;
+									iconClasses = states.error;
 								} else if (step.warning) {
-									iconClasses = indicatorProperties[index].iconClasses.warning;
+									iconClasses = states.warning;
 								} else if (step.complete) {
-									iconClasses = indicatorProperties[index].iconClasses.complete;
+									iconClasses = states.complete;
+								} else {
+									iconClasses = states.default;
 								}
 							}
 

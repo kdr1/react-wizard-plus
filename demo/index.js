@@ -75,7 +75,8 @@ class Root extends Component {
 		let iconClasses = {
 			complete: "fa fa-check",
 			warning: "fa fa-exclamation-triangle",
-			error: "fa fa-exclamation"
+			error: "fa fa-exclamation",
+			default: "fa fa-bank"
 		}
 
 		let _mockData = [
