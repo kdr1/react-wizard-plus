@@ -33,6 +33,10 @@ class ReactWizardContainer extends Component {
 	}
 
 	init(reinitHeader) {
+		this.afterCompleteComponent = React.cloneElement(this.props.afterCompleteComponent, {
+			style: { ...this.props.afterCompleteComponent.props.style, display: "none" }
+		});
+
 		this.childrenWithControls = updateChildProps(this.props.children, (child, index) => {
 			return {
 				index: index,
@@ -169,18 +173,23 @@ class ReactWizardContainer extends Component {
 	}
 
 	onComplete(validationFunc) {
-		let newState, validationResponse = typeof validationFunc === "function" ? validationFunc(this.state) : 1;
+		let newState,
+			validationResponse = typeof validationFunc === "function" ? validationFunc(this.state) : 1,
+			completed = false;
 
 		switch (validationResponse) {
 			case 0:
 				newState = _newState(this.state, 0, { complete: false, warning: false, error: true, disableNext: true });
 				break;
 			case 1:
-				newState = _newState(this.state, 0, { complete: true, warning: false, error: false, disableNext: true });;
+				newState = _newState(this.state, 0, { complete: true, warning: false, error: false, disableNext: true });
+				completed = true;
 				break;
 		}
 
-		// TODO: After complete component
+		if (completed) {
+			newState = { ...newState, current: -1 };
+		}
 
 		this.setState(newState);
 	}
@@ -220,15 +229,22 @@ class ReactWizardContainer extends Component {
 			rebuildControls = true;
 		}
 
+		if (this.state.current === -1) {
+			this.afterCompleteComponent = React.cloneElement(this.afterCompleteComponent, {
+				style: { ...this.afterCompleteComponent.props.style, display: "block" }
+			});
+		}
+
 		return (
 			<ReactWizard
 				ref={ (wizard) => this.wizard = wizard }
 				indicatorProperties= { this.indicatorProperties }
 				steps={ this.state.steps }
 				currentStep={ this.state.current }
-				currentStepTitle={ children[this.state.current].props.title }
-				currentStepSubheading={ children[this.state.current].props.subheading }
+				currentStepTitle={ children[this.state.current] ? children[this.state.current].props.title : this.afterCompleteComponent.props.title }
+				currentStepSubheading={ children[this.state.current] ? children[this.state.current].props.subheading : this.afterCompleteComponent.props.subheading }
 				onIndicatorClick={ this.handleIndicatorClick }
+				afterCompleteComponent={ this.afterCompleteComponent }
 				style={ style }
 				{ ...rest }>
 				{ this.renderChildren(rebuildControls) }

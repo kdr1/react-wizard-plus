@@ -101,7 +101,7 @@ class StepContainer extends Component {
 }
 
 StepContainer.propTypes = {
-	component: PropTypes.element.isRequired,
+	component: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 	controls: PropTypes.array,
 	title: PropTypes.string,
 	subheading: PropTypes.string,

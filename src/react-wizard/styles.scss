@@ -36,6 +36,9 @@ $rw-bs: $rw-bs-x $rw-bs-y $rw-bs-blur $rw-bs-spread;
 
 $rw-background-gradient-angle: 165deg;
 
+$rw-min-height: 40.75rem;
+$rw-min-width: 60rem;
+
 .react-wizard {
 	position: relative;
 	background: linear-gradient($rw-background-gradient-angle, $rw-tertiary-color-2, $rw-tertiary-color-2, $rw-tertiary-color-2, lighten($rw-primary-color-1, 61%));
@@ -46,8 +49,8 @@ $rw-background-gradient-angle: 165deg;
 	box-shadow: inset $rw-bs $rw-secondary-color-1;
 	-webkit-box-shadow: inset $rw-bs $rw-secondary-color-1;
 	-moz-box-shadow: inset $rw-bs $rw-secondary-color-1;
-	min-height: 40.75rem;
-	min-width: 60rem;
+	min-height: $rw-min-height;
+	min-width: $rw-min-width;
 	@import "./step/styles.scss";
 	@import "./header/styles.scss";
 	&.complete {
@@ -101,5 +104,9 @@ $rw-background-gradient-angle: 165deg;
 	@keyframes reactWizardSpinner {
 		from { transform: rotate(0deg); }
 		to { transform: rotate(360deg); }
+	}
+	&.after-complete {
+		padding: $rw-step-and-header-padding;
+		min-height: $rw-min-height - ($rw-step-and-header-padding * 2);
 	}
 }
