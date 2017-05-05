@@ -16,7 +16,7 @@ export function applyClasses(classList, cases, defaultClasses) {
 }
 
 export function uid(length) {
-	const charlist = "abcdefghijklmnopqrstuvwzyxABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+	const charlist = "abcdefghijklmnopqrstuvwzyxABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	let _uid = new Array(),
 		i;

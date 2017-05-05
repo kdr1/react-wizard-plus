@@ -33,9 +33,11 @@ class ReactWizardContainer extends Component {
 	}
 
 	init(reinitHeader) {
-		this.afterCompleteComponent = React.cloneElement(this.props.afterCompleteComponent, {
-			style: { ...this.props.afterCompleteComponent.props.style, display: "none" }
-		});
+		if (this.props.afterCompleteComponent) {
+			this.afterCompleteComponent = React.cloneElement(this.props.afterCompleteComponent, {
+				style: { ...this.props.afterCompleteComponent.props.style, display: "none" }
+			});
+		}
 
 		this.childrenWithControls = updateChildProps(this.props.children, (child, index) => {
 			return {
@@ -230,9 +232,11 @@ class ReactWizardContainer extends Component {
 		}
 
 		if (this.state.current === -1) {
-			this.afterCompleteComponent = React.cloneElement(this.afterCompleteComponent, {
-				style: { ...this.afterCompleteComponent.props.style, display: "block" }
-			});
+			if (this.afterCompleteComponent) {
+				this.afterCompleteComponent = React.cloneElement(this.afterCompleteComponent, {
+					style: { ...this.afterCompleteComponent.props.style, display: "block" }
+				});
+			}
 		}
 
 		return (
@@ -241,8 +245,8 @@ class ReactWizardContainer extends Component {
 				indicatorProperties= { this.indicatorProperties }
 				steps={ this.state.steps }
 				currentStep={ this.state.current }
-				currentStepTitle={ children[this.state.current] ? children[this.state.current].props.title : this.afterCompleteComponent.props.title }
-				currentStepSubheading={ children[this.state.current] ? children[this.state.current].props.subheading : this.afterCompleteComponent.props.subheading }
+				currentStepTitle={ children[this.state.current] ? children[this.state.current].props.title : this.afterCompleteComponent ? this.afterCompleteComponent.props.title : null }
+				currentStepSubheading={ children[this.state.current] ? children[this.state.current].props.subheading : this.afterCompleteComponent ? this.afterCompleteComponent.props.subheading : null }
 				onIndicatorClick={ this.handleIndicatorClick }
 				afterCompleteComponent={ this.afterCompleteComponent }
 				style={ style }
