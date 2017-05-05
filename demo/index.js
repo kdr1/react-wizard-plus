@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { ReactWizard, Step } from "../src";
-
+import { uid } from "../src/utils.js";
 const stepOneComponent = (props) => {
 	return <form>Step One: { props.label }</form>
 }
@@ -49,6 +49,9 @@ class Root extends Component {
 
 		this.steps = null;
 		this.stateHydration = null;
+
+		this.disableStep = this.disableStep.bind(this);
+		this.enableStep = this.enableStep.bind(this);
 
 		this.setData = this.setData.bind(this);
 		this.setNewData = this.setNewData.bind(this);
@@ -156,6 +159,7 @@ class Root extends Component {
 	}
 
 	disableStep() {
+		console.log(this)
 		this.wizard.disableStep(1);
 	}
 
@@ -164,36 +168,13 @@ class Root extends Component {
 	}
 
 	render() {
-		/*if (!this.steps) {
+		if (!this.steps) {
 			setTimeout(() => {
 				if (!this.dataSet) {
 					this.setData();
 				}
 			}, 250);
-		}*/
-		this.steps = this.steps ? this.steps : ReactWizard.createSteps([
-			{
-				component: stepOneComponent({ label: "Booyah!" }),
-				title: "Contact Information",
-				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
-				indicatorLabel: "Contact Information"
-			},
-			{
-				component: <StepTwoComponent />,
-				title: "Shipping Information",
-				subheading: "We'll ship your order anywhere in the world!",
-				indicatorLabel: "Shipping Information",
-				onNextFunc: (state) => 1,
-				className: "some-class-I-need",
-				id: "my-id"
-			},
-			{
-				component: stepThreeComponent({ name: "Kyle" }),
-				title: "Billing Information",
-				subheading: "How would you like to pay for your order?",
-				indicatorLabel: "Billing Information"
-			}
-		]);
+		}
 
 		return (
 			<div className="demo-wizard">
@@ -207,8 +188,25 @@ class Root extends Component {
 				</ReactWizard>
 				<br />
 				<button type="button" onClick={ this.setNewData }>Inject new data</button>
-				<button type="button" onClick={ this.disableStep.bind(this, 1) }>disale step 2</button>
-				<button type="button" onClick={ this.enableStep.bind(this, 1) }>enable step 2</button>
+				<button type="button" onClick={ this.disableStep }>disale step 2</button>
+				<button type="button" onClick={ this.enableStep }>enable step 2</button>
+				<br />
+				<br />
+				<ReactWizard
+				ref={ (wiz2) => this.wiz2 = wiz2 }>
+					{
+						ReactWizard.createSteps([
+							{
+								component: ((props) => { return <div><p>Step 1</p></div> })({}),
+								title: "Step 1"
+							},
+							{
+								component: ((props) => { return <div><p>Step 2</p></div> })({}),
+								title: "Step 2"
+							}
+						])
+					}
+				</ReactWizard>
 			</div>
 		);
 	}

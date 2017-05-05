@@ -7,13 +7,10 @@ import { uid } from "../../utils.js";
 class StepContainer extends Component {
 	constructor(props) {
 		super(props);
-
-		this.processAction = this.processAction.bind(this);
-		this.applyControls = this.applyControls.bind(this);
 	}
 
 	componentWillMount() {
-		this.applyControls(this.props);
+		_applyControls(this, this.props);
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -32,38 +29,8 @@ class StepContainer extends Component {
 	componentWillUpdate(nextProps) {
 		if (nextProps.rebuildControls) {
 			this.controls = null;
-			this.applyControls(nextProps);
+			_applyControls(this, nextProps);
 		}
-	}
-
-	applyControls(props) {
-		let i, len = props.controls.length;
-
-		for (i = 0; i < len; i++) {
-			let control = props.controls[i],
-				_control;
-
-			switch (control.type) {
-				case 0:
-					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, (props.index - 1), false, control.label);
-					break;
-				case 1:
-					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, (props.index + 1), props.disableNext, control.label);
-					break;
-				case 2:
-					_control = _controlWithProps(uid(8), this.processAction, control.validationFunc, undefined, props.disableNext, control.label);
-					break;
-			}
-
-			this.controls = this.controls ? this.controls.concat(_control) : new Array(_control);
-		}
-	}
-
-	processAction(validationFunc, indexToGoto) {
-		const props = this.props;
-		const callback = typeof indexToGoto !== "undefined" ? indexToGoto > props.index ? props._onNextFunc : props._onPrevFunc : props._onCompleteFunc;
-
-		return callback(validationFunc, indexToGoto);
 	}
 
 	render() {
@@ -121,8 +88,35 @@ export default StepContainer;
 
 /* Internal functions, methods, and variables */
 
-function _controlWithProps(key, callback, validationFunc, targetIndex, disabled, label) {
-	return <Control key={ key } onClick={ () => callback(validationFunc, targetIndex) } disabled={ disabled }>{ label }</Control>;
+function _controlWithProps(key, callback, validationFunc, targetIndex, disabled, label, props) {
+	return <Control key={ key } onClick={ () => callback(validationFunc, targetIndex, props) } disabled={ disabled }>{ label }</Control>;
+}
+
+const _applyControls = (self, props) => {
+	let i, len = props.controls.length;
+
+	for (i = 0; i < len; i++) {
+		let control = props.controls[i],
+			_control;
+
+		switch (control.type) {
+			case 0:
+				_control = _controlWithProps(uid(8), _processAction, control.validationFunc, (props.index - 1), false, control.label, self.props);
+				break;
+			case 1:
+				_control = _controlWithProps(uid(8), _processAction, control.validationFunc, (props.index + 1), props.disableNext, control.label, self.props);
+				break;
+			case 2:
+				_control = _controlWithProps(uid(8), _processAction, control.validationFunc, undefined, props.disableNext, control.label, self.props);
+				break;
+		}
+		self.controls = self.controls ? self.controls.concat(_control) : new Array(_control);
+	}
+}
+
+const _processAction = (validationFunc, indexToGoto, props) => {
+	const callback = typeof indexToGoto !== "undefined" ? indexToGoto > props.index ? props._onNextFunc : props._onPrevFunc : props._onCompleteFunc;
+	return callback(validationFunc, indexToGoto);
 }
 
 

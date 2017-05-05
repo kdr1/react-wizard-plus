@@ -6,30 +6,18 @@ class IndicatorBar extends PureComponent {
 	constructor(props) {
 		super(props);
 
-		this.init = this.init.bind(this);
-		this.reinit = this.reinit.bind(this);
+		this.reinitialize = this.reinitialize.bind(this);
 	}
 
 	componentWillMount() {
-		this.init();
+		_initialize.call(this);
 	}
 
-	init() {
-		this.styleElId = `rw-indicator-bar-${uid(12)}`;
-
-		let styleEl = document.createElement("STYLE"),
-			head = document.head || document.getElementsByTagName('head')[0];
-
-		styleEl.type = "text/css";
-		styleEl.id = this.styleElId;
-		head.appendChild(styleEl);
-	}
-
-	reinit() {
+	reinitialize() {
 		document.getElementById(this.styleElId).innerText = "";
 		let step;
 		for (step in this.props.steps) {
-			this[`indicator${step}`].reinit();
+			this[`indicator${step}`].reinitialize();
 		}
 	}
 
@@ -95,3 +83,16 @@ class IndicatorBar extends PureComponent {
 }
 
 export default IndicatorBar;
+
+/* Internal functions, methods, and variables */
+
+function _initialize() {
+	this.styleElId = `rw-indicator-bar-${uid(12)}`;
+
+	let styleEl = document.createElement("STYLE"),
+		head = document.head || document.getElementsByTagName('head')[0];
+
+	styleEl.type = "text/css";
+	styleEl.id = this.styleElId;
+	head.appendChild(styleEl);
+}

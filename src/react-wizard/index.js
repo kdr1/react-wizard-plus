@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import ReactWizardContainer from "./react-wizard.container";
 import Step from "./step";
 import { uid, camelCase } from "../utils.js";
-
 import "./styles.scss";
+
+let WIZARDS = new Object();
 
 class ConditionalRenderWrapper extends PureComponent {
 	constructor(props) {
@@ -13,20 +14,19 @@ class ConditionalRenderWrapper extends PureComponent {
 		this.reinitialize = this.reinitialize.bind(this);
 		this.enableStep = this.enableStep.bind(this);
 		this.disableStep = this.disableStep.bind(this);
+		this.wizardKey = uid(24);
 	}
 
 	reinitialize() {
-		if (this.wizard) {
-			this.wizard.rehydrateState();
-		}
+		WIZARDS[this.wizardKey].rehydrateState();
 	}
 
 	enableStep(index) {
-		this.wizard.enableStep(index);
+		WIZARDS[this.wizardKey].enableStep(index);
 	}
 
 	disableStep(index) {
-		this.wizard.disableStep(index);
+		WIZARDS[this.wizardKey].disableStep(index);
 	}
 
 	render() {
@@ -35,7 +35,7 @@ class ConditionalRenderWrapper extends PureComponent {
 		if (children) {
 			return (
 				<ReactWizardContainer
-					ref={ (wizard) => this.wizard = wizard }
+					ref={ (wizard) => WIZARDS = { ...WIZARDS, [this.wizardKey]: wizard } }
 					id={ id }
 					hydrateState={ hydrateState }
 					onCompleteFunc={ onCompleteFunc }

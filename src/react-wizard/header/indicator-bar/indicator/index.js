@@ -5,24 +5,14 @@ class Indicator extends PureComponent {
 	constructor(props) {
 		super(props);
 
-		this.init = this.init.bind(this);
-		this.reinit = this.reinit.bind(this);
+		this.reinitialize = this.reinitialize.bind(this);
 	}
 
 	componentWillMount() {
-		this.init();
+		_initialize.call(this);
 	}
 
-	init() {
-		this.id = this.props.id ? this.props.id : `rw-indicator-${uid(12)}`;
-
-		if (this.props.styleElId && this.props.label) {
-			let pseudoStyles = `#${this.id} .react-wizard-indicator-circle:before { content: "${this.props.label}" }`;
-			document.getElementById(this.props.styleElId).innerText += pseudoStyles;
-		}
-	}
-
-	reinit() {
+	reinitialize() {
 		if (this.props.styleElId && this.props.label) {
 			let pseudoStyles = `#${this.id} .react-wizard-indicator-circle:before { content: "${this.props.label}" }`;
 			document.getElementById(this.props.styleElId).innerText += pseudoStyles;
@@ -81,6 +71,15 @@ class Indicator extends PureComponent {
 export default Indicator;
 
 /* Internal functions, methods, and variables */
+
+function _initialize() {
+	this.id = this.props.id ? this.props.id : `rw-indicator-${uid(12)}`;
+
+	if (this.props.styleElId && this.props.label) {
+		let pseudoStyles = `#${this.id} .react-wizard-indicator-circle:before { content: "${this.props.label}" }`;
+		document.getElementById(this.props.styleElId).innerText += pseudoStyles;
+	}
+}
 
 const _classListArray = [
 	{
