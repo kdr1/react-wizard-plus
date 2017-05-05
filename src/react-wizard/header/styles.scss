@@ -27,6 +27,17 @@ $rw-header-bs: $rw-header-bs-x $rw-header-bs-y $rw-header-bs-blur $rw-header-bs-
 }
 
 // these &'s are attched to .react-wizard class'
+&.after-complete {
+	.react-wizard-header {
+		background: transparent;
+		position: absolute;
+		height: 3.5rem;
+		width: 10rem;
+		top: 0rem;
+		right: 0rem;
+	}
+}
+
 &.complete {
 	.react-wizard-header {
 		box-shadow: inset $rw-header-bs $rw-secondary-color-2;

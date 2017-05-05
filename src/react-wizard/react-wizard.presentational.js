@@ -17,24 +17,34 @@ class ReactWizard extends Component {
 			children,
 			onIndicatorClick,
 			style,
+			afterCompleteComponent,
 			...rest
 		} = this.props;
 
-		let cases = _cases(steps[currentStep]);
+		let cases = _cases(currentStep > -1 ? steps[currentStep] : { complete: true });
 
-		return (
-			<section className={ applyClasses(_classListArray, cases, "react-wizard") } style={ style } { ...rest }>
-				<Header
-					ref={ (header) => this.header = header }
-					indicatorProperties={ indicatorProperties }
-					onIndicatorClick={ onIndicatorClick }
-					steps={ steps }
-					currentStep={ currentStep }
-					currentStepTitle={ currentStepTitle }
-					currentStepSubheading={ currentStepSubheading } />
-				{ children }
-			</section>
-		);
+		if (currentStep > -1) {
+			return (
+				<section className={ applyClasses(_classListArray, cases, "react-wizard") } style={ style } { ...rest }>
+					<Header
+						ref={ (header) => this.header = header }
+						indicatorProperties={ indicatorProperties }
+						onIndicatorClick={ onIndicatorClick }
+						steps={ steps }
+						currentStep={ currentStep }
+						currentStepTitle={ currentStepTitle }
+						currentStepSubheading={ currentStepSubheading } />
+					{ children }
+				</section>
+			);
+		} else {
+			return (
+				<section className={ applyClasses(_classListArray, cases, "react-wizard after-complete") } style={ style } { ...rest }>
+					<div className="react-wizard-header" />
+					{ afterCompleteComponent }
+				</section>
+			);
+		}
 	}
 }
 

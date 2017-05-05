@@ -31,6 +31,7 @@ class ConditionalRenderWrapper extends PureComponent {
 
 	render() {
 		let { id, children, loadingSpinnerClass, hydrateState, onCompleteFunc, afterCompleteComponent, ...rest } = this.props;
+
 		if (children) {
 			return (
 				<ReactWizardContainer
@@ -77,7 +78,7 @@ ConditionalRenderWrapper.createSteps = function(stepsData) {
 		steps = steps.concat(
 			<Step
 				key={ `${camelCase(step.title)}-${uid(4)}` }
-				component={ step.component() }
+				component={ step.component }
 				title={ step.title }
 				subheading={ step.subheading }
 				id={ step.id }

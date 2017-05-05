@@ -6,12 +6,18 @@ const stepOneComponent = (props) => {
 	return <form>Step One: { props.label }</form>
 }
 
-const stepTwoComponent = (props) => {
-	return <form>Step Two</form>
+class StepTwoComponent extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return <form>Step Two</form>
+	}
 }
 
 const stepThreeComponent = (props) => {
-	return <form>Step Three</form>
+	return <form>Hello { props.name }</form>
 }
 
 function comp1callback(state) {
@@ -19,7 +25,19 @@ function comp1callback(state) {
 	return 1;
 }
 
+class AfterCompleteComponent extends Component {
+	constructor(props) {
+		super(props);
+	}
 
+	render() {
+		return (
+			<div style={ this.props.style }>
+				<h2>Congratulations on conquering this wizard!</h2>
+			</div>
+		);
+	}
+}
 
 class Root extends Component {
 	constructor(props) {
@@ -47,7 +65,7 @@ class Root extends Component {
 				indicatorLabel: "Contact Information"
 			},
 			{
-				component: stepTwoComponent,
+				component: <StepTwoComponent />,
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
@@ -81,7 +99,7 @@ class Root extends Component {
 
 		let _mockData = [
 			{
-				component: stepOneComponent.bind(this, { label: "Brand new and shinny!" }),
+				component: stepOneComponent({ label: "Brand new and shinny!" }),
 				title: "Contact Information",
 				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
 				indicatorLabel: "Contact Information",
@@ -89,15 +107,15 @@ class Root extends Component {
 				indicatorIconClasses: iconClasses
 			},
 			{
-				component: stepTwoComponent,
+				component: <StepTwoComponent />,
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
-				onNextFunc: (state) => { console.log("onNextFunc for Shipping Information"); return 1; },
+				onNextFunc:(state) => { console.log("onNextFunc for Shipping Information"); return 1; },
 				indicatorIconClasses: iconClasses
 			},
 			{
-				component: (props) => { return <div>Step four componnet</div>; },
+				component: ((props) => { return <div>Step four componnet</div>; })({}),
 				title: "More stuff?",
 				subheading: "Another subheading to wow you with!",
 				indicatorLabel: "More stuff",
@@ -105,15 +123,15 @@ class Root extends Component {
 				indicatorIconClasses: iconClasses
 			},
 			{
-				component: stepThreeComponent,
+				component: stepThreeComponent({}),
 				title: "Billing Information",
 				subheading: "How would you like to pay for your order?",
 				indicatorLabel: "Billing Information",
-				onNextFunc: (state) => { console.log("onNextFunc for Billing Information"); return 0; },
+				onNextFunc: (state) => { console.log("onNextFunc for Billing Information"); return 1; },
 				indicatorIconClasses: iconClasses
 			},
 			{
-				component: (props) => { return <div>Step five componnet</div>; },
+				component: ((props) => { return <div>Step five componnet</div>; })({}),
 				title: "This is new",
 				subheading: "Ipsum gipsum loriem dipsum",
 				indicatorLabel: "This is new",
@@ -155,13 +173,13 @@ class Root extends Component {
 		}*/
 		this.steps = this.steps ? this.steps : ReactWizard.createSteps([
 			{
-				component: stepOneComponent.bind(this, { label: "Booyah!" }),
+				component: stepOneComponent({ label: "Booyah!" }),
 				title: "Contact Information",
 				subheading: "Please fill out the below contact information so that we can keep you informed about your order!",
 				indicatorLabel: "Contact Information"
 			},
 			{
-				component: stepTwoComponent,
+				component: <StepTwoComponent />,
 				title: "Shipping Information",
 				subheading: "We'll ship your order anywhere in the world!",
 				indicatorLabel: "Shipping Information",
@@ -170,7 +188,7 @@ class Root extends Component {
 				id: "my-id"
 			},
 			{
-				component: stepThreeComponent,
+				component: stepThreeComponent({ name: "Kyle" }),
 				title: "Billing Information",
 				subheading: "How would you like to pay for your order?",
 				indicatorLabel: "Billing Information"
@@ -178,12 +196,12 @@ class Root extends Component {
 		]);
 
 		return (
-			<div>
+			<div className="demo-wizard">
 				<ReactWizard
 					ref={ (wiz) => this.wizard = wiz }
 					hydrateState={ this.stateHydration }
 					onCompleteFunc={ this.onCompleteFunc }
-					//afterCompleteComponent={}
+					afterCompleteComponent={ <AfterCompleteComponent /> }
 					>
 					{ this.steps }
 				</ReactWizard>
